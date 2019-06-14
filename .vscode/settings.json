@@ -1,0 +1,10 @@
+{
+    // ...
+    "search.exclude": {
+        "**/dist": true,
+        "**/logs": true,
+        "**/blizzard": true,
+        "**/unused": true
+    },
+    // ...
+}
