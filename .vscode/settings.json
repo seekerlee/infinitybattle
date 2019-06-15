@@ -4,7 +4,7 @@
         "**/dist": true,
         "**/logs": true,
         "**/blizzard": true,
-        "**/unused": true
+        //"**/unused": true
     },
     // ...
 }

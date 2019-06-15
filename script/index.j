@@ -36,13 +36,16 @@
 //! import "lib\xedummy.j"
 
 // game play
+//! import "game\Battle.j"
 //! import "game\CreepCamp.j"
 ///! import "game\heroRebirth.j"
 ///! import "game\heroSelect.j"
 //! import "game\Jaina.j"
 //! import "game\main.j"
+//! import "game\MapConst.j"
 ///! import "game\Minions.j"
 //! import "game\Seconds.j"
-///! import "game\Spawn.j"
+//! import "game\Shopping.j"
+//! import "game\Spawn.j"
 
 // ability
