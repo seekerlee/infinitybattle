@@ -37,7 +37,7 @@ library xebasic
 
 //===========================================================================
 globals
-   constant integer XE_DUMMY_UNITID       = 'e000'
+   constant integer XE_DUMMY_UNITID       = 'n000'
    constant integer XE_HEIGHT_ENABLER     = 'Amrf'
    constant integer XE_TREE_RECOGNITION   = 'Aeat'
    constant real    XE_ANIMATION_PERIOD   =  0.025

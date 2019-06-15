@@ -16,16 +16,9 @@
 //! import "lib\base\Trigger.j"
 //! import "lib\base\UniqueList.j"
 //! import "lib\base\UniqueNxListT.j"
-// indexer
-//! import "lib\indexer\UnitIndexer Pregame Event.j"
-//! import "lib\indexer\UnitIndexer Settings.j"
-//! import "lib\indexer\UnitIndexer UnitIndex.j"
-//! import "lib\indexer\UnitIndexer UnitIndexer.j"
-//! import "lib\indexer\UnitIndexer.j"
 // testsystem
 //! import "lib\testsystem\Chat Commands.j"
 //! import "lib\testsystem\Configuration.j"
-
 
 // normal
 //! import "lib\ARGB.j"
@@ -36,12 +29,20 @@
 //! import "lib\RegisterPlayerUnitEvent.j"
 //! import "lib\SpellEffectEvent.j"
 //! import "lib\TextTag.j"
+//! import "lib\UnitDex.j"
 //! import "lib\WorldBounds.j"
 //! import "lib\xebasic.j"
 //! import "lib\xecast.j"
 //! import "lib\xedummy.j"
 
 // game play
-
+//! import "game\CreepCamp.j"
+///! import "game\heroRebirth.j"
+///! import "game\heroSelect.j"
+//! import "game\Jaina.j"
+//! import "game\main.j"
+///! import "game\Minions.j"
+//! import "game\Seconds.j"
+///! import "game\Spawn.j"
 
 // ability
