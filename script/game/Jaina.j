@@ -14,6 +14,7 @@ library Jaina requires Table, WorldBounds, MapConst
         // create jaina in center
         set U_JAINA = CreateUnit(P_JAINA, ID_JAINA, WorldBounds.centerX, WorldBounds.centerY, 90.0)
         call UnitRemoveAbility( U_JAINA, 'Amov' )
+        call UnitRemoveAbility(U_JAINA, 'Aatk')
         set T_JAINA_DIE = CreateTrigger()
         call TriggerRegisterUnitEvent(tDie, U_JAINA, EVENT_UNIT_DEATH)
         call TriggerAddCondition(tDie, Condition(function OnJainaDie))

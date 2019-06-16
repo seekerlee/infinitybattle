@@ -11,7 +11,7 @@ library Battle requires MapConst, RegisterPlayerUnitEvent, Spawn
 
     function createEnemy takes nothing returns nothing
         local enemyConfig enemyConfigList = enemyConfig.create()
-        call enemyConfigList.addEnemy('hsor', 5)
+        call enemyConfigList.addEnemy('hrif', 20)
         // call enemyConfigList.addEnemy('hpea', 20)
         set currentEnemyCount = SpawnPointAttack(P_DARK, enemyConfigList, GetRectCenterX(RCT_TOPCENTER), GetRectCenterY(RCT_TOPCENTER), 0.0, 0.0)
         call enemyConfigList.destroy()

@@ -24,6 +24,7 @@
 //! import "lib\ARGB.j"
 //! import "lib\Board.j"
 //! import "lib\DamageEngine.j"
+//! import "lib\FloatingTextArc.j"
 //! import "lib\Knockback.j"
 //! import "lib\RegisterNativeEvent.j"
 //! import "lib\RegisterPlayerUnitEvent.j"
@@ -47,6 +48,8 @@
 ///! import "game\Minions.j"
 //! import "game\Seconds.j"
 //! import "game\Shopping.j"
+//! import "game\ShowDamage.j"
 //! import "game\Spawn.j"
 
 // ability
+//! import "hero\dh.j"

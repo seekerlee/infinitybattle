@@ -65,7 +65,7 @@ library Diffculty initializer init requires Table
         call BlzSetUnitAttackCooldown(u, BlzGetUnitAttackCooldown(u, 0) * enh.rate_ACD, 0)
 
         call SetUnitState(u, UNIT_STATE_LIFE, BlzGetUnitMaxHP(u))
-        call SetUnitState(u, UNIT_STATE_MAX_MANA, BlzGetUnitMaxMana(u))
+        call SetUnitState(u, UNIT_STATE_MANA, BlzGetUnitMaxMana(u))
     endfunction
 
     private function init takes nothing returns nothing
