@@ -52,7 +52,7 @@ struct xecast[MAXINSTANCES]
                                        // in which the spell can do damage.
 
 
-    public player  owningplayer=Player(15)  //which player to credit for the ability cast?
+    public player  owningplayer=Player(PLAYER_NEUTRAL_AGGRESSIVE)  //which player to credit for the ability cast?
                                             //notice this can also affect what units are targeteable
 
     //==================================================================================================
@@ -457,7 +457,7 @@ struct xecast[MAXINSTANCES]
         loop
             exitwhen (i==0)
             // set udg_UnitIndexerEnabled = false
-            set u=CreateUnit(Player(15),XE_DUMMY_UNITID,0,0,0)
+            set u=CreateUnit(Player(PLAYER_NEUTRAL_AGGRESSIVE),XE_DUMMY_UNITID,0,0,0)
             // set udg_UnitIndexerEnabled = true
             call TriggerRegisterUnitEvent(.abilityRemove,u,EVENT_UNIT_SPELL_ENDCAST)
             call UnitAddAbility(u,'Aloc')

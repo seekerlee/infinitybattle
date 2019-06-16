@@ -34,7 +34,6 @@ endglobals
             set did = true
         endif
 
-            
         return false
     endfunction
     private function learned2 takes nothing returns boolean

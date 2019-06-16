@@ -41,7 +41,7 @@
 //! import "game\CreepCamp.j"
 //! import "game\Diffculty.j"
 ///! import "game\heroRebirth.j"
-///! import "game\heroSelect.j"
+//! import "game\heroSelect.j"
 //! import "game\Jaina.j"
 //! import "game\main.j"
 //! import "game\MapConst.j"
@@ -52,4 +52,4 @@
 //! import "game\Spawn.j"
 
 // ability
-//! import "hero\dh.j"
+///! import "hero\dh.j"

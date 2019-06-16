@@ -157,7 +157,7 @@ library xedummy requires xebasic
             endif
             loop
                 exitwhen i==0
-                set .dummy = CreateUnit(Player(15), XE_DUMMY_UNITID, 0.0,0.0,q.angle)
+                set .dummy = CreateUnit(Player(PLAYER_NEUTRAL_AGGRESSIVE), XE_DUMMY_UNITID, 0.0,0.0,q.angle)
                 call UnitAddAbility(.dummy,XE_HEIGHT_ENABLER)
                 call UnitAddAbility(.dummy,'Aloc')
                 call UnitRemoveAbility(.dummy,XE_HEIGHT_ENABLER)
