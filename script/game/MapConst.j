@@ -1,5 +1,7 @@
 library MapConst initializer init
     globals
+        integer currentWave = 0
+        //
         unit U_JAINA = null
         constant player P_JAINA = Player(22)
         constant player P_DARK = Player(23)

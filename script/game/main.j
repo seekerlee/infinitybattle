@@ -1,10 +1,9 @@
-library main initializer init requires Table, Spawn, Jaina, Battle, Shopping
+library main initializer init requires Table, Spawn, Jaina, Battle, Shopping, MapConst
     globals
         private key GAME_INIT
         private key GAME_WAIT
         private key GAME_BATTLE
 
-        private integer currentWave = 0
     endglobals
 
     private function registerEvent takes nothing returns nothing

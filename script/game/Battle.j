@@ -1,13 +1,9 @@
-library Battle requires TimerUtils, MapConst, RegisterPlayerUnitEvent
+library Battle requires MapConst, RegisterPlayerUnitEvent, Spawn
 
     globals
         private trigger tOnBattleEnd
         integer currentEnemyCount
     endglobals
-    
-    function registerOnEnemyKilled takes code func returns nothing
-
-    endfunction
 
     function registerOnBattleEnd takes code func returns nothing
         call TriggerAddCondition(tOnBattleEnd, Condition(func))
@@ -15,13 +11,10 @@ library Battle requires TimerUtils, MapConst, RegisterPlayerUnitEvent
 
     function createEnemy takes nothing returns nothing
         local enemyConfig enemyConfigList = enemyConfig.create()
-        call enemyConfigList.addEnemy('hfoo', 5)
+        call enemyConfigList.addEnemy('hsor', 5)
         // call enemyConfigList.addEnemy('hpea', 20)
-        // SpawnPointAttack takes player forPlayer, enemyConfig ec, real x, real y, real targetX, real targetY returns nothing
-        call SpawnPointAttack(P_DARK, enemyConfigList, GetRectCenterX(RCT_TOPCENTER), GetRectCenterY(RCT_TOPCENTER), 0.0, 0.0)
+        set currentEnemyCount = SpawnPointAttack(P_DARK, enemyConfigList, GetRectCenterX(RCT_TOPCENTER), GetRectCenterY(RCT_TOPCENTER), 0.0, 0.0)
         call enemyConfigList.destroy()
-
-        set currentEnemyCount = 5
     endfunction
 
     function startBattle takes integer wave returns nothing
