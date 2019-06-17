@@ -31,7 +31,7 @@ library Spawn initializer init requires MapConst, GroupUtils, ListT, Diffculty
                 exitwhen i == enemyc.count
                 set u = CreateUnit(forPlayer, enemyc.unitId, x, y, 0.0)
                 //call RemoveGuardPosition(u)
-                call unitApplyEnhance(u, currentWave + 50)
+                call unitApplyEnhance(u, currentWave )
                 set spawnCount = spawnCount + 1
                 call IssuePointOrder(u, "attack", targetX, targetY)
                 set i = i + 1

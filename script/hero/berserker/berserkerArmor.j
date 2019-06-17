@@ -63,7 +63,7 @@ library berserkerArmor initializer Init requires TimerUtils, SpellEffectEvent
         local berserkerParam bp
         // 5 times life
         local integer max_life_now
-        if (GetSpellAbilityId() == AB_ID) then
+        if (GetSpellAbilityId() != AB_ID) then
             return false
         endif
         set u = GetTriggerUnit()

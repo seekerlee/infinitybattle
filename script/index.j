@@ -23,6 +23,7 @@
 // normal
 //! import "lib\ARGB.j"
 //! import "lib\Board.j"
+//! import "lib\BonusMod.j"
 //! import "lib\DamageEngine.j"
 //! import "lib\FloatingTextArc.j"
 //! import "lib\Knockback.j"
@@ -35,6 +36,7 @@
 //! import "lib\xebasic.j"
 //! import "lib\xecast.j"
 //! import "lib\xedummy.j"
+//! import "lib\xepreload.j"
 
 // game play
 //! import "game\Battle.j"
@@ -53,4 +55,6 @@
 
 // ability
 //! import "hero\berserker\berserkerArmor.j"
+//! import "hero\berserker\DragonBlade.j"
+//! import "hero\berserker\keepalive.j"
 ///! import "hero\dh.j"

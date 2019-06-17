@@ -1,4 +1,4 @@
-library DragonBlade initializer Init requires RegisterPlayerUnitEvent
+library DragonBlade initializer Init requires RegisterPlayerUnitEvent, BonusMod, xecast
 
     globals
         private integer array soulCount
@@ -9,11 +9,9 @@ library DragonBlade initializer Init requires RegisterPlayerUnitEvent
     endglobals
     
     private function addBuf takes unit u returns nothing
-        local xecast   xc = xecast.createA()
-
+        local xecast xc = xecast.createA()
         set xc.abilityid    = ABLITY_SLOW
         set xc.orderstring  = "slow"
-        set xc.owningplayer = GetOwningPlayer(u)
         call xc.castOnTarget(u)
     endfunction
     
@@ -45,7 +43,7 @@ library DragonBlade initializer Init requires RegisterPlayerUnitEvent
         //elseif (bladeLvl == 4) then
         //endif
         local integer currentSoul = soulCount[UIndex]
-        if (bladeLvl > 0) then
+        if (bladeLvl > 0) then // if blade kills
             if (IsUnitType(deadU, UNIT_TYPE_MECHANICAL) or (not IsUnitEnemy(deadU, GetOwningPlayer(killer))) ) then
                 return false
             endif
@@ -54,38 +52,31 @@ library DragonBlade initializer Init requires RegisterPlayerUnitEvent
             endif
             call AdjustBladeBuf(killer)
         endif
-        if (bladeLvl_dead > 0) then
+        if (bladeLvl_dead > 0) then // if blade is killed
             set soulCount[UIndex_dead] = 0
             call AdjustBladeBuf(deadU)
         endif
         return false
     endfunction
     
-    private function Action takes nothing returns nothing
-        local unit u_berserker = GetTriggerUnit()
-        local integer bladeLvl = GetUnitAbilityLevel(u_berserker, ABLITY_DB)
+    private function Action takes nothing returns boolean
+        local integer bladeLvl
+        if GetLearnedSkill() != ABLITY_DB then
+            return false
+        endif
+        set bladeLvl = GetUnitAbilityLevel(GetTriggerUnit(), ABLITY_DB)
         if (bladeLvl > 1) then
-            call AdjustBladeBuf(u_berserker)
+            call AdjustBladeBuf(GetTriggerUnit())
         endif
         if (bladeLvl == 1) then
             call RegisterAnyPlayerUnitEvent(EVENT_PLAYER_UNIT_DEATH, function ActionUnitDeath)
         endif
-    endfunction
-
-    private function Requirement takes nothing returns boolean
-        return GetLearnedSkill() == ABLITY_DB
+        return false
     endfunction
     
     private function Init takes nothing returns nothing
-    
-        local trigger t = CreateTrigger()
         
-        call TriggerRegisterAnyUnitEventBJ( t, EVENT_PLAYER_HERO_SKILL )
-        call TriggerAddCondition(t, Condition(function Requirement))
-        call TriggerAddAction(t, function Action)
-        
-        set t = null
-        
+        call RegisterAnyPlayerUnitEvent(EVENT_PLAYER_HERO_SKILL, function Action)
     endfunction
 
 endlibrary

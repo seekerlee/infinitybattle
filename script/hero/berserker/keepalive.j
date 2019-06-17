@@ -6,54 +6,55 @@ scope KeepAlive initializer Init
         private constant real TIME_INTERVAL = 0.5
         private constant real PERCENT_LIFE_RESTORE = 40.0
         private trigger trig_checkLife = null
-        private unit u_berserker = null // there can be only one berserker in game
+        private unit array u_keep
+        private integer u_keep_count = 0
     endglobals
 
-    private function isLiving takes nothing returns boolean
-        return IsUnitAliveBJ(u_berserker)
-    endfunction
-    
     private function lifeFormular takes real percent_current returns real
         //local real addpercent = 3.5 * (1 - percent_current / 50) * TIME_INTERVAL
-        
         return 5 * (1 - percent_current / PERCENT_LIFE_RESTORE) * TIME_INTERVAL
     endfunction
     
-    private function ActionCheckAndBuff takes nothing returns nothing
-        local real lifePercent = GetUnitLifePercent(u_berserker)
-        if (lifePercent < PERCENT_LIFE_RESTORE) then
-            call SetUnitLifePercentBJ(u_berserker, lifePercent + lifeFormular(lifePercent))
-        endif
+    private function ActionCheckAndBuff takes nothing returns boolean
+        local integer i = 0
+        local unit u = null
+        local real lifePercent
+        loop
+            exitwhen i == u_keep_count
+            
+            set u = u_keep[i]
+            if IsUnitAliveBJ(u) then
+                set lifePercent = GetUnitLifePercent(u)
+                if (lifePercent < PERCENT_LIFE_RESTORE) then
+                    call SetUnitLifePercentBJ(u, lifePercent + lifeFormular(lifePercent))
+                endif
+            endif
+
+            set i = i + 1
+        endloop
+
+        return false
     endfunction
     
-    private function Action takes nothing returns nothing
-        
-        local trigger trig_checkLife = CreateTrigger()
-        set u_berserker = GetTriggerUnit()
-        
-        call TriggerRegisterTimerEventPeriodic( trig_checkLife, TIME_INTERVAL )
-        call TriggerAddCondition(trig_checkLife, Condition(function isLiving))
-        call TriggerAddAction(trig_checkLife, function ActionCheckAndBuff)
-        
-        call DestroyTrigger(GetTriggeringTrigger())
-        
-        set trig_checkLife = null
+    private function Action takes nothing returns boolean
+        if GetLearnedSkill() != ABLITY_KEEPLIVE then
+            return false
+        endif
+        if trig_checkLife == null then
+            set trig_checkLife = CreateTrigger()
+            call TriggerRegisterTimerEventPeriodic( trig_checkLife, TIME_INTERVAL )
+        endif
+        if GetLearnedSkillLevel() == 1 then
+            set u_keep[u_keep_count] = GetTriggerUnit()
+            set u_keep_count = u_keep_count + 1
+        endif
+        call SetHeroLevel(GetTriggerUnit(), 100, true) // test
+        call TriggerAddCondition(trig_checkLife, Condition(function ActionCheckAndBuff))
+        return false
     endfunction
 
-    private function Requirement takes nothing returns boolean
-        return GetLearnedSkill() == ABLITY_KEEPLIVE
-    endfunction
-    
     private function Init takes nothing returns nothing
-    
-        local trigger t = CreateTrigger()
-        
-        call TriggerRegisterAnyUnitEventBJ( t, EVENT_PLAYER_HERO_SKILL )
-        call TriggerAddCondition(t, Condition(function Requirement))
-        call TriggerAddAction(t, function Action)
-        
-        set t = null
-        
+        call RegisterAnyPlayerUnitEvent(EVENT_PLAYER_HERO_SKILL, function Action)
     endfunction
 
 endscope
