@@ -55,15 +55,23 @@ library berserkerArmor initializer Init requires TimerUtils, SpellEffectEvent
         call bp.destroy()
         set u = null
     endfunction
-    
 
     private function Action takes nothing returns boolean
-        local unit u = GetTriggerUnit()
-        local timer t_bleed = NewTimerEx(GetUnitId(u))
-        local timer t_end = NewTimer()
-        local berserkerParam bp = berserkerParam.create()
+        local unit u
+        local timer t_bleed
+        local timer t_end
+        local berserkerParam bp
         // 5 times life
-        local integer max_life_now = BlzGetUnitMaxHP(u)
+        local integer max_life_now
+        if (GetSpellAbilityId() == AB_ID) then
+            return false
+        endif
+        set u = GetTriggerUnit()
+        set t_bleed = NewTimerEx(GetUnitId(u))
+        set t_end = NewTimer()
+        set bp = berserkerParam.create()
+        // 5 times life
+        set max_life_now = BlzGetUnitMaxHP(u)
         call BlzSetUnitMaxHP(u, max_life_now * 5)
         // turn black
         call SetUnitVertexColor(u, 0, 0, 0, 255)
@@ -80,7 +88,6 @@ library berserkerArmor initializer Init requires TimerUtils, SpellEffectEvent
         call SetTimerData(t_end, bp)
         call TimerStart(t_end, AB_EFFECT_TIME, false, function recover)
         
-        //
         set u = null
         set t_bleed = null
         set t_end = null
