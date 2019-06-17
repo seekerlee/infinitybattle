@@ -1,4 +1,4 @@
-library main initializer init requires Table, Spawn, Jaina, Battle, Shopping, MapConst
+library main initializer init requires Table, Spawn, Jaina, Battle, Shopping, HeroSelect, MapConst
     globals
         private key GAME_INIT
         private key GAME_WAIT
@@ -35,6 +35,7 @@ library main initializer init requires Table, Spawn, Jaina, Battle, Shopping, Ma
         call initJaina()
         call initBattle()
         call initShopping()
+        call InitHeroSelect()
         call registerOnJainaDie(function onJainaDie)
         call registerOnBattleEnd(function onBattleEnd)
         call registerOnShoppingEnd(function onShoppingEnd)

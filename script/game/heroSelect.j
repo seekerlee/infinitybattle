@@ -1,4 +1,4 @@
-library heroSelect requires RegisterPlayerUnitEvent, MapConst
+library HeroSelect requires RegisterPlayerUnitEvent, MapConst
 
     globals
         private constant integer ID_SELECTOR = 'e001'
@@ -25,7 +25,7 @@ library heroSelect requires RegisterPlayerUnitEvent, MapConst
         return false
     endfunction
 
-    private function InitHeroSelect takes nothing returns nothing
+    function InitHeroSelect takes nothing returns nothing
         local integer index = 0
         local real x = GetLocationX(GetUnitLoc(U_JAINA))
         local real y = GetLocationY(GetUnitLoc(U_JAINA))
