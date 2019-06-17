@@ -52,4 +52,5 @@
 //! import "game\Spawn.j"
 
 // ability
+//! import "hero\berserker\berserkerArmor.j"
 ///! import "hero\dh.j"
