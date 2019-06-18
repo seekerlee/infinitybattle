@@ -272,8 +272,6 @@ private function checkDeath takes nothing returns boolean
     return false
 endfunction
 
-
-
 private function EnablePointOrderTrig takes boolean enable returns nothing
     if enable then
         call EnableTrigger(GetAnyPlayerUnitEventTrigger(EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER))
