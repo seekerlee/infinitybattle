@@ -1,4 +1,4 @@
-library berserkerArmor initializer Init requires TimerUtils, SpellEffectEvent
+library BerserkerArmor initializer Init requires TimerUtils, SpellEffectEvent
 
     globals
         boolean array berserkerStateOn

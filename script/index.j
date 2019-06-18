@@ -29,6 +29,7 @@
 //! import "lib\Knockback.j"
 //! import "lib\RegisterNativeEvent.j"
 //! import "lib\RegisterPlayerUnitEvent.j"
+//! import "lib\SoundTools.j"
 //! import "lib\SpellEffectEvent.j"
 //! import "lib\TextTag.j"
 //! import "lib\UnitDex.j"
@@ -54,7 +55,8 @@
 //! import "game\Spawn.j"
 
 // ability
-//! import "hero\berserker\berserkerArmor.j"
+//! import "hero\berserker\BerserkerArmor.j"
 //! import "hero\berserker\DragonBlade.j"
-//! import "hero\berserker\keepalive.j"
+//! import "hero\berserker\Keepalive.j"
+//! import "hero\berserker\Parry.j"
 ///! import "hero\dh.j"
