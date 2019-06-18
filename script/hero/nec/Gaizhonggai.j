@@ -56,7 +56,22 @@ library Gaizhonggai initializer init requires UnitDex, GroupUtils
         return false
     endfunction
 
+    private function killU takes nothing returns nothing
+        call KillUnit(GetEnumUnit())
+    endfunction
+
+    private function DieActions takes nothing returns boolean
+        local group g = skeletonGroups[GetUnitId(GetDyingUnit())]
+        if g != null then
+            call ForGroup(g, function killU)
+            call ReleaseGroup(g)
+        endif
+        set g = null
+        return false
+    endfunction
+
     private function init takes nothing returns nothing
         call RegisterAnyPlayerUnitEvent(EVENT_PLAYER_UNIT_SUMMON, function Actions)
+        call RegisterAnyPlayerUnitEvent(EVENT_PLAYER_UNIT_DEATH, function DieActions)
     endfunction
 endlibrary
