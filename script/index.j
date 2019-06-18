@@ -60,4 +60,6 @@
 //! import "hero\berserker\Keepalive.j"
 //! import "hero\berserker\Parry.j"
 //! import "hero\berserker\Revange.j"
-///! import "hero\dh.j"
+
+//! import "hero\tyrael\DouM.j"
+//! import "hero\tyrael\Skyfall.j"
