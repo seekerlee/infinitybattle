@@ -64,3 +64,4 @@
 //! import "hero\tyrael\DouM.j"
 //! import "hero\tyrael\Skyfall.j"
 //! import "hero\tyrael\Thunderblade.j"
+//! import "hero\tyrael\ThunderStorm.j"
