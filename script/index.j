@@ -69,4 +69,5 @@
 //! import "hero\nec\AddUnSummon.j"
 //! import "hero\nec\Curse.j"
 //! import "hero\nec\Gaizhonggai.j"
+//! import "hero\nec\SummonLeoric.j"
 //! import "hero\nec\Unsummon.j"
