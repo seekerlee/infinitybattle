@@ -67,5 +67,6 @@
 //! import "hero\tyrael\ThunderStorm.j"
 
 //! import "hero\nec\AddUnSummon.j"
+//! import "hero\nec\Curse.j"
 //! import "hero\nec\Gaizhonggai.j"
 //! import "hero\nec\Unsummon.j"
