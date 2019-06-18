@@ -59,4 +59,5 @@
 //! import "hero\berserker\DragonBlade.j"
 //! import "hero\berserker\Keepalive.j"
 //! import "hero\berserker\Parry.j"
+//! import "hero\berserker\Revange.j"
 ///! import "hero\dh.j"

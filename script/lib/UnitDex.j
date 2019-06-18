@@ -26,7 +26,7 @@ library UnitDex uses optional WorldBounds, optional GroupUtils
         // Uncomment the lines below to define a global filter for units being indexed
       
         static method onFilter takes unit u returns boolean
-            return GetUnitTypeId(u) != 'n000' // XE_DUMMY_UNITID
+            return GetUnitTypeId(u) != 'e000' // XE_DUMMY_UNITID
         endmethod
       
     endmodule

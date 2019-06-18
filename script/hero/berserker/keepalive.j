@@ -48,7 +48,6 @@ scope KeepAlive initializer Init
             set u_keep[u_keep_count] = GetTriggerUnit()
             set u_keep_count = u_keep_count + 1
         endif
-        call SetHeroLevel(GetTriggerUnit(), 100, true) // test
         call TriggerAddCondition(trig_checkLife, Condition(function ActionCheckAndBuff))
         return false
     endfunction

@@ -33,7 +33,7 @@ library HeroSelect requires RegisterPlayerUnitEvent, MapConst
             exitwhen index == bj_MAX_PLAYERS // 12
             if (GetPlayerController(Player(index)) == MAP_CONTROL_USER and GetPlayerSlotState(Player(index)) == PLAYER_SLOT_STATE_PLAYING) then
                 // create unit for player
-                call CreateUnit(Player(index), ID_SELECTOR, x, y, 0)
+                call SetUnitInvulnerable(CreateUnit(Player(index), ID_SELECTOR, x, y, 0), true)
             endif
             set index = index + 1
         endloop
