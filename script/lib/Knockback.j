@@ -1,5 +1,5 @@
 library Knockback initializer Init
-
+// https://www.hiveworkshop.com/threads/knockback-unit.35545/
 // **************************************************************************
 // **                                                                      **
 // ** Knockback(Ex)                                                        **
@@ -16,7 +16,7 @@ library Knockback initializer Init
 //=======================================//
 
 globals
-    private constant integer DUMMY_ID = 'h000'
+    private constant integer DUMMY_ID = 'e000'
 endglobals
 
 private function TreeFilter takes nothing returns boolean
@@ -109,7 +109,7 @@ public struct Data
         endif
 
         call SetUnitPosition(u, GetUnitX(u), GetUnitY(u))
-        call PauseUnit(u, true)
+        // call PauseUnit(u, true) // modified
 
         if Total == 0 then
             call TimerStart(Tim, Interval(), true, function Data.Execute)
@@ -190,7 +190,7 @@ public struct Data
             call DestroyEffect(.e)
         endif
 
-        call PauseUnit(.u, false)
+        // call PauseUnit(.u, false)
 
         set BoolAr[0] = false
         set BoolAr[1] = false

@@ -26,7 +26,13 @@ library xecast initializer init requires xebasic
     // the dummy unit's cooldown and mana before casting every spell.
     // it is a performance penalty, so if you are sure that all dummy spells
     // in your map got 0 mana and cooldown cost, you may set it to false.    
-    private constant boolean AUTO_RESET_MANA_COOLDOWN = true 
+    private constant boolean AUTO_RESET_MANA_COOLDOWN = true
+
+    
+    //==================================================================================================
+    real xeDummyAbilityAddedEvent = 0
+    integer xeEventeDummy = 0
+    unit xeTriggerUnit = null
  endglobals
 
 //=========================================================================
@@ -54,7 +60,13 @@ struct xecast[MAXINSTANCES]
 
     public player  owningplayer=Player(PLAYER_NEUTRAL_AGGRESSIVE)  //which player to credit for the ability cast?
                                             //notice this can also affect what units are targeteable
-
+    //==================================================================================================
+    // mypart
+    public unit owningUnit = null
+    method onDestroy takes nothing returns nothing
+        set this.owningUnit = null
+        set this.owningplayer = null
+    endmethod
     //==================================================================================================
     // You need an order id for the ability so the dummy unit is able to cast it, two ways to assign it
     //   set instance.orderid     = 288883            //would assign an integer orderid
@@ -227,15 +239,13 @@ struct xecast[MAXINSTANCES]
             set dummy=.dummystack[.top]
             call SetUnitOwner(dummy,.owningplayer,false)
         else
-            // set udg_UnitIndexerEnabled = false
             set dummy=CreateUnit(.owningplayer,XE_DUMMY_UNITID,0,0,0)
-            // set udg_UnitIndexerEnabled = true
             call TriggerRegisterUnitEvent(.abilityRemove,dummy,EVENT_UNIT_SPELL_ENDCAST)
             call UnitAddAbility(dummy,'Aloc')
             call UnitAddAbility(dummy,XE_HEIGHT_ENABLER)
             call UnitRemoveAbility(dummy,XE_HEIGHT_ENABLER)
         endif
-        call UnitAddAbility(dummy, abilityid)
+        call UnitAddAbility(dummy, abilityid) // check if it had ability
         static if AUTO_RESET_MANA_COOLDOWN then
             call UnitResetCooldown(dummy)
             call SetUnitState(dummy, UNIT_STATE_MANA, 10000.0)
@@ -243,6 +253,12 @@ struct xecast[MAXINSTANCES]
         if(level>1) then
             call SetUnitAbilityLevel(dummy, abilityid, level)
         endif
+        // seeker modify
+        set xeEventeDummy = this
+        set xeTriggerUnit = dummy
+        set xeDummyAbilityAddedEvent = 1.00
+        set xeDummyAbilityAddedEvent = 0.00
+        set xeTriggerUnit = null
     //! endtextmacro
     private static integer cparent
     private static integer current

@@ -1,4 +1,7 @@
-library Spawn initializer init requires MapConst, GroupUtils, ListT, Diffculty
+library Spawn initializer init requires MapConst, GroupUtils, ListT, Diffculty, UnitDex
+
+    globals
+    endglobals
 
     struct enemyConfig extends array
         readonly integer unitId
@@ -17,11 +20,10 @@ library Spawn initializer init requires MapConst, GroupUtils, ListT, Diffculty
         implement ListT // TODO: check destroy
     endstruct
 
-    function SpawnPointAttack takes player forPlayer, enemyConfig ec, real x, real y, real targetX, real targetY returns integer
+    function SpawnPointAttack takes group creepGroup, player forPlayer, enemyConfig ec, real x, real y, real targetX, real targetY returns nothing
         local enemyConfig enemyc
         local integer i
         local unit u
-        local integer spawnCount = 0
 
         set enemyc = ec.first
         loop
@@ -30,9 +32,8 @@ library Spawn initializer init requires MapConst, GroupUtils, ListT, Diffculty
             loop
                 exitwhen i == enemyc.count
                 set u = CreateUnit(forPlayer, enemyc.unitId, x, y, 0.0)
-                //call RemoveGuardPosition(u)
+                call GroupAddUnit(creepGroup, u)
                 call unitApplyEnhance(u, currentWave )
-                set spawnCount = spawnCount + 1
                 call IssuePointOrder(u, "attack", targetX, targetY)
                 set i = i + 1
             endloop
@@ -41,11 +42,13 @@ library Spawn initializer init requires MapConst, GroupUtils, ListT, Diffculty
 
         set u = null
         call RemoveAllGuardPositions(forPlayer)
-        return spawnCount
     endfunction
 
+
+
+
     private function init takes nothing returns nothing
-        //call test()
+        
     endfunction
 
 endlibrary

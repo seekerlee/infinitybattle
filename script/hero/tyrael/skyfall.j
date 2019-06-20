@@ -41,17 +41,14 @@ library skyfall initializer init requires SpellEffectEvent
         endmethod
 
         private method damageEarth takes unit u, real x, real y returns nothing
-            local xecast xc //CreateA so we don't have to destroy the object after the cast.
+            local xecast xc
+            call SetUnitAnimation(u, "attack")
         
-            set xc  = xecast.createA()
-            call SetUnitAnimation(u, "attack") // Let's focus on the look of the item cast for a second...
-            //==============================================
-            // Here, we do assignments:
-            //
+            set xc = xecast.createA()
             set xc.abilityid    = 'A00B'
-            set xc.level        = 1 //GetUnitAbilityLevel(u, 'A005' ) //* Same level as trigger ability
-            set xc.orderstring  = "stomp"                     //* The order is polymorph
-            set xc.owningplayer = GetOwningPlayer(u)              //* The owning player, determines targets and bounty credits
+            set xc.level        = 1
+            set xc.orderstring  = "stomp"
+            set xc.owningplayer = GetOwningPlayer(u)
         
             call xc.castInPoint( x, y )
 

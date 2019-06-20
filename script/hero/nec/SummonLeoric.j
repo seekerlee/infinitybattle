@@ -30,6 +30,7 @@ library SummonLeoric initializer init requires TimerUtils, UnitDex
             
             set this.targetLoc = null
             set this.effectTimer = null
+            call BJDebugMsg("end")
             return false
         endmethod
         
@@ -40,15 +41,13 @@ library SummonLeoric initializer init requires TimerUtils, UnitDex
             if GetSpellAbilityId() != 'A006' then 
                 return false
             endif
-            set u = GetTriggerUnit()
+            set u = GetSpellAbilityUnit()
             set this = GetUnitId(u)
             set leoric = FirstOfGroup(GetUnitsOfPlayerAndTypeId(GetTriggerPlayer(), UID_LEORIC))
                     
             if (leoric != null) then
-                call PauseUnit(GetSpellAbilityUnit(), true)
-                call IssueImmediateOrder(GetSpellAbilityUnit(), "stop")
-                call PauseUnit(GetSpellAbilityUnit(), false)
                 if (IsUnitAliveBJ(leoric)) then
+                    call BJDebugMsg("set position")
                     call SetUnitPositionLocFacingLocBJ(leoric, this.targetLoc, GetUnitLoc(u))
                     call SetUnitAnimation(leoric, "birth")
                     call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Human\\ReviveHuman\\ReviveHuman.mdl", leoric, "origin"))
@@ -107,6 +106,7 @@ library SummonLeoric initializer init requires TimerUtils, UnitDex
             set u = GetTriggerUnit()
             set this = thistype[GetUnitId(u)]
             set this.effectTimer = NewTimerEx(this)
+            call BJDebugMsg("this.targetLoc")
             set this.targetLoc = PolarProjectionBJ(GetUnitLoc(u), 300, GetUnitFacing(u))
             
             call TimerStart(effectTimer, 0.3, true, function thistype.playSummoning)

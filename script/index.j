@@ -26,6 +26,7 @@
 //! import "lib\BonusMod.j"
 //! import "lib\DamageEngine.j"
 //! import "lib\FloatingTextArc.j"
+//! import "lib\IsUnitMoving.j"
 //! import "lib\Knockback.j"
 //! import "lib\RegisterNativeEvent.j"
 //! import "lib\RegisterPlayerUnitEvent.j"
@@ -71,3 +72,7 @@
 //! import "hero\nec\Gaizhonggai.j"
 //! import "hero\nec\SummonLeoric.j"
 //! import "hero\nec\Unsummon.j"
+
+
+//! import "hero\soldier76\Flee.j"
+//! import "hero\soldier76\HelixRockets.j"
