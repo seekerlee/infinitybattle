@@ -57,7 +57,6 @@ library Diffculty initializer init requires Table
 
     function unitApplyEnhance takes unit u, integer lvl returns nothing
         local baseEnhance enh = getEnhance(lvl)
-        debug call BJDebugMsg("enhance unit lvl: " + I2S(lvl))
         call BlzSetUnitMaxHP(u, R2I(BlzGetUnitMaxHP(u) * enh.rate_maxLife))
         call BlzSetUnitMaxMana(u, R2I(BlzGetUnitMaxMana(u) * enh.rate_maxMana))
         call BlzSetUnitBaseDamage(u, R2I(BlzGetUnitBaseDamage(u, 0) * enh.rate_damage), 0)

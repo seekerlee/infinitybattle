@@ -1,5 +1,9 @@
 library HelixRockets initializer init requires SpellEffectEvent, Knockback, GroupUtils, xecast
     
+    globals
+        private constant integer BUF_ID_BASH = 'B003'
+    endglobals
+
     struct fallback
         private unit u
         private real targetX
@@ -28,7 +32,7 @@ library HelixRockets initializer init requires SpellEffectEvent, Knockback, Grou
     endstruct
 
     private function onHit takes nothing returns boolean
-        local integer lvl = GetUnitAbilityLevel(udg_DamageEventTarget, 'BPSE')
+        local integer lvl = GetUnitAbilityLevel(udg_DamageEventTarget, BUF_ID_BASH)
         local real x1
         local real y1
         local real x2
@@ -40,7 +44,7 @@ library HelixRockets initializer init requires SpellEffectEvent, Knockback, Grou
         if lvl == 0 then
             return false
         endif
-        call UnitRemoveAbility(udg_DamageEventTarget, 'BPSE')
+        call UnitRemoveAbility(udg_DamageEventTarget, BUF_ID_BASH)
 
         set xc = xecast.createA()
         set xc.abilityid    = 'A00U'
