@@ -73,7 +73,8 @@
 //! import "hero\nec\SummonLeoric.j"
 //! import "hero\nec\Unsummon.j"
 
-
 //! import "hero\soldier76\Flee.j"
 //! import "hero\soldier76\HelixRockets.j"
 //! import "hero\soldier76\TacticalVisor.j"
+
+//! import "hero\ted\DeadForCertain.j"

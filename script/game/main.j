@@ -6,13 +6,6 @@ library main initializer init requires Table, Spawn, Jaina, Battle, Shopping, He
 
     endglobals
 
-    private function registerEvent takes nothing returns nothing
-        local trigger t
-        set t = CreateTrigger()
-        //call TriggerAddCondition(t, Filter(function DestroyInit))
-        call TriggerRegisterVariableEvent(t, "udg_UnitIndexEvent", EQUAL, 3.00)
-    endfunction
-
     private function onJainaDie takes nothing returns boolean
         call BJDebugMsg("dead")
         return false
