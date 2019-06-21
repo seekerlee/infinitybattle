@@ -68,6 +68,8 @@ library TriditionCraft initializer init requires GroupUtils, SpellEffectEvent, T
             call TimerStart(t, 10.0, false, function thistype.onBufEnd)
             call TimerStart(tFacing, 0.03, false, function thistype.onPositioned)
 
+            set t = null
+            set tFacing = null
             set u = null
             return false
         endmethod
