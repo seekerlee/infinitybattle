@@ -9,6 +9,7 @@ library Flee initializer init requires SpellEffectEvent, TimerUtils, UnitDex
         local unit u = GetUnitById(GetTimerData(GetExpiredTimer()))
         call UnitRemoveAbility(u, AB_CODE_MISS)
         call SetUnitVertexColor(u, 255, 255, 255, 255)
+        call SetUnitPathing( u, true )
         call ReleaseTimer(GetExpiredTimer())
         set u = null
     endfunction
@@ -16,11 +17,14 @@ library Flee initializer init requires SpellEffectEvent, TimerUtils, UnitDex
     private function onCast takes nothing returns boolean
         local unit u = GetTriggerUnit()
         local timer t = NewTimerEx(GetUnitId(u))
+        
         call TimerStart(t, 12.0, false, function onBuffEnd)
+        call SetUnitPathing( u, false )
         call UnitAddAbility(u, AB_CODE_MISS)
         call SetUnitAbilityLevel(u, AB_CODE_MISS, GetUnitAbilityLevel(u, AB_CODE_FLEE))
         call BlzUnitHideAbility(u, AB_CODE_MISS, true)
         call SetUnitVertexColor(u, 255, 255, 255, 128)
+
         set t = null
         set u = null
         return false
