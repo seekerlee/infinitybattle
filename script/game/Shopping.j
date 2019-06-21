@@ -45,9 +45,11 @@ library Shopping requires MapConst, TimerUtils
 
     function startShopping takes nothing returns nothing
         local timer tm = NewTimer()
-        call TimerStart(tm, shoppingTime, false, function endShopping)
+        call TimerStart(tm, shoppingTime, false, function tEndShopping)
         call BJDebugMsg("shopping time")
         call showShops(true)
+
+        set tm = null
         // create shops
     endfunction
     

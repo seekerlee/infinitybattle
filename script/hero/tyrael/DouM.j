@@ -47,14 +47,12 @@ scope DouM initializer Init
     
     private function Action takes nothing returns boolean
         local trigger t
-        if (GetLearnedSkill() != ID_DOUM and GetLearnedSkillLevel() > 1) then
-            return false
+        if (GetLearnedSkill() == ID_DOUM and GetLearnedSkillLevel() == 1) then
+            set t = CreateTrigger()
+            call TriggerRegisterUnitEvent( t, GetTriggerUnit(), EVENT_UNIT_DAMAGED )
+            call TriggerAddCondition(t, Condition(function ActionRevenge))
+            set t = null
         endif
-        set t = CreateTrigger()
-        call TriggerRegisterUnitEvent( t, GetTriggerUnit(), EVENT_UNIT_DAMAGED )
-        call TriggerAddCondition(t, Condition(function ActionRevenge))
-        
-        set t = null
         return false
     endfunction
 

@@ -25,7 +25,7 @@ library ThunderStorm initializer Init requires GroupUtils, UnitDex
         endmethod
         
         private static method NotAlly takes nothing returns boolean
-            return IsUnitAliveBJ(GetFilterUnit()) and IsPlayerEnemy(GetOwningPlayer(GetFilterUnit()), Player(g_enumParamPlay))
+            return IsUnitAliveBJ(GetFilterUnit()) and IsPlayerEnemy(GetOwningPlayer(GetFilterUnit()), Player(g_enumParamPlay)) //TODO BJ
         endmethod
 
         private static method dianliao takes nothing returns nothing
@@ -38,7 +38,7 @@ library ThunderStorm initializer Init requires GroupUtils, UnitDex
             call SetUnitAnimation(u, "attack")
             
             set g_enumParamPlay = GetPlayerId(GetOwningPlayer(u))
-            call GroupEnumUnitsInRange(ENUM_GROUP, GetLocationX(GetUnitLoc(u)), GetLocationY(GetUnitLoc(u)), 900, Filter(function thistype.NotAlly))
+            call GroupEnumUnitsInRange(ENUM_GROUP, GetUnitX(u), GetUnitY(u), 900, Filter(function thistype.NotAlly))
             // set gdaomei = GetRandomSubGroup(CountUnitsInGroup(g) / 4, g)
             set gdaomei = GetRandomSubGroup(3, ENUM_GROUP)
             set groupCount = BlzGroupGetSize(gdaomei)
@@ -81,11 +81,7 @@ library ThunderStorm initializer Init requires GroupUtils, UnitDex
             endif
             set u = GetTriggerUnit()
             set this = GetUnitId(u)
-
-            call DestroyTimer(this.castTimer)
-            call DestroyEffect(this.lighteff)
             
-            // clear hash table
             call EnableWeatherEffect( weather, false )
             set u = null
             call DestroyEffect(this.lighteff)
