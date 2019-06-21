@@ -15,6 +15,7 @@ library OrderEvent requires RegisterPlayerUnitEvent, Table
 
 globals
     private Table t = 0
+    constant boolean RPUE_VERSION_NEW = true
 endglobals
 
 //============================================================================

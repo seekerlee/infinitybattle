@@ -28,6 +28,9 @@
 //! import "lib\FloatingTextArc.j"
 //! import "lib\IsUnitMoving.j"
 //! import "lib\Knockback.j"
+//! import "lib\OrderEvent.j"
+//! import "lib\PlayerUtils.j"
+
 //! import "lib\RegisterNativeEvent.j"
 //! import "lib\RegisterPlayerUnitEvent.j"
 //! import "lib\SoundTools.j"
@@ -78,3 +81,4 @@
 //! import "hero\soldier76\TacticalVisor.j"
 
 //! import "hero\ted\DeadForCertain.j"
+//! import "hero\ted\AllIn.j"

@@ -1,7 +1,6 @@
 library Flee initializer init requires SpellEffectEvent, TimerUtils, UnitDex
 
     globals
-        // integer array fleeUnitId
         private constant integer AB_CODE_FLEE = 'A00Y'
         private constant integer AB_CODE_MISS = 'A00Z'
     endglobals
