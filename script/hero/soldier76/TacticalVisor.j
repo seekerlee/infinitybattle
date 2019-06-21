@@ -47,11 +47,6 @@ library TacticalVisor initializer init requires TimerUtils, SpellEffectEvent
             loop
                 exitwhen i == 10 or ab == null
                 set b = BlzSetAbilityRealLevelField(ab, ABILITY_RLF_CHANCE_TO_CRITICAL_STRIKE, i, CHANCE_BUF)
-                if b then
-                    call BJDebugMsg("return true")
-                else
-                    call BJDebugMsg("return false")
-                endif
                 set i = i + 1
             endloop
             set ab = null

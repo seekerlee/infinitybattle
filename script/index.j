@@ -82,3 +82,4 @@
 
 //! import "hero\ted\DeadForCertain.j"
 //! import "hero\ted\AllIn.j"
+//! import "hero\ted\TriditionCraft.j"
