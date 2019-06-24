@@ -36,12 +36,7 @@ library DragonBlade initializer Init requires RegisterPlayerUnitEvent, BonusMod,
         local integer UIndex = GetUnitUserData(killer)
         local integer UIndex_dead = GetUnitUserData(deadU)
         local integer maxSoul = 10 * bladeLvl
-        //if (bladeLvl == 1) then
-        //    set maxSoul = 10
-        //elseif (bladeLvl == 2) then
-        //elseif (bladeLvl == 3) then
-        //elseif (bladeLvl == 4) then
-        //endif
+        
         local integer currentSoul = soulCount[UIndex]
         if (bladeLvl > 0) then // if blade kills
             if (IsUnitType(deadU, UNIT_TYPE_MECHANICAL) or (not IsUnitEnemy(deadU, GetOwningPlayer(killer))) ) then
@@ -75,7 +70,6 @@ library DragonBlade initializer Init requires RegisterPlayerUnitEvent, BonusMod,
     endfunction
     
     private function Init takes nothing returns nothing
-        
         call RegisterAnyPlayerUnitEvent(EVENT_PLAYER_HERO_SKILL, function Action)
     endfunction
 

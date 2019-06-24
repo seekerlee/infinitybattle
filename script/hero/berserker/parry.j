@@ -41,61 +41,56 @@ library Parry initializer Init requires DamageEngine, SoundTools, BerserkerArmor
         set removeTimer = null
     endfunction
     
-    private function Action takes nothing returns boolean
-        
-        local real damageBack
-        local integer luck
-        local integer abliLvl
-        local integer keepAliveLvl
-        local real lifePercent
-
-        if 0 == GetUnitAbilityLevel(udg_DamageEventTarget, ID_PARRY) then
-            return false
-        endif
-        
-        set luck = GetRandomInt(0, 99)
-        set abliLvl = GetUnitAbilityLevel(udg_DamageEventTarget, ID_PARRY)
-        set keepAliveLvl = GetUnitAbilityLevel(udg_DamageEventTarget, ABLITY_KEEPLIVE)
-        set lifePercent = GetUnitLifePercent(udg_DamageEventTarget)
-
+    private function ShouldParry takes real lifePercent, integer parryLvl, integer keepAliveLvl, boolean isBerserkerOn returns boolean
+        local real luck = GetRandomReal(0.0, 100.0)
+        // keepAliveLvl bonus
         if (lifePercent < 15) then
-            set luck = luck - keepAliveLvl * 4 // add more posibility by 4, 8, 12, 16
+            set luck = luck - keepAliveLvl * 1.5 // add more posibility by 4, 8, 12, 16
         elseif (lifePercent < 30) then
-            set luck = luck - keepAliveLvl * 2 // add more posibility by 2, 4, 6, 8
+            set luck = luck - keepAliveLvl * 0.75 // add more posibility by 2, 4, 6, 8
         endif
-        
-        if ( berserkerStateOn[GetUnitId(udg_DamageEventTarget)] ) then
-            set luck = luck - 30
+        // BerserkerArmor bonus
+        if isBerserkerOn then
+            set luck = luck - 15.0
         endif
-        
-        if (abliLvl == 1) and luck > 10 then
+        // lvl bouns
+        set luck = luck - 10.0 - (parryLvl - 1) * 4.44 //10-50
+
+        return luck < 0.0
+    endfunction
+
+    private function Action takes nothing returns boolean
+        local integer luck
+        local real damageBack
+        local integer parryLvl
+        local integer keepAliveLvl
+
+        if udg_IsDamageSpell or 0 == GetUnitAbilityLevel(udg_DamageEventTarget, ID_PARRY) then
             return false
-        elseif (abliLvl == 2) and luck > 15 then
-            return false
-        elseif (abliLvl == 3) and luck > 20 then
-            return false
-        elseif (abliLvl == 4) and luck > 25 then
-            return false
         endif
         
-        // 
-        set luck = GetRandomInt(0, 2)
-        if (luck == 0) then 
-            call RunSoundOnUnit(pSound0, udg_DamageEventTarget)
-        elseif ( luck == 1) then
-            call RunSoundOnUnit(pSound1, udg_DamageEventTarget)
-        else 
-            call RunSoundOnUnit(pSound2, udg_DamageEventTarget)
+        set parryLvl = GetUnitAbilityLevel(udg_DamageEventTarget, ID_PARRY)
+        set keepAliveLvl = GetUnitAbilityLevel(udg_DamageEventTarget, ABLITY_KEEPLIVE)
+
+        if ShouldParry(GetUnitLifePercent(udg_DamageEventTarget), parryLvl, keepAliveLvl, berserkerStateOn[GetUnitId(udg_DamageEventTarget)]) then
+            set luck = GetRandomInt(0, 2)
+            if (luck == 0) then 
+                call RunSoundOnUnit(pSound0, udg_DamageEventTarget)
+            elseif ( luck == 1) then
+                call RunSoundOnUnit(pSound1, udg_DamageEventTarget)
+            else 
+                call RunSoundOnUnit(pSound2, udg_DamageEventTarget)
+            endif
+            
+            set udg_DamageEventAmount = 0
+            call DestroyEffect(AddSpecialEffectTarget( PARRY_EFF , udg_DamageEventTarget, "origin"))
+            if (IsUnitInRange(udg_DamageEventTarget, udg_DamageEventSource, PARRY_RANGE)) then
+                set damageBack = 2.0 * udg_DamageEventAmount + I2R(GetHeroStr(udg_DamageEventTarget, true))
+                call UnitDamageTarget(udg_DamageEventTarget, udg_DamageEventSource, damageBack, true, false, ATTACK_TYPE_CHAOS, DAMAGE_TYPE_UNKNOWN, null)
+                call createParryUnitFor(udg_DamageEventTarget, udg_DamageEventSource)
+            endif
         endif
-        
-        set udg_DamageEventAmount = 0
-        call DestroyEffect(AddSpecialEffectTarget( PARRY_EFF , udg_DamageEventTarget, "origin"))
-        if (IsUnitInRange(udg_DamageEventTarget, udg_DamageEventSource, PARRY_RANGE)) then
-            set damageBack = 2.0 * udg_DamageEventAmount + I2R(GetHeroStr(udg_DamageEventTarget, true))
-            call UnitDamageTarget(udg_DamageEventTarget, udg_DamageEventSource, damageBack, true, false, ATTACK_TYPE_CHAOS, DAMAGE_TYPE_UNKNOWN, null)
-            call createParryUnitFor(udg_DamageEventTarget, udg_DamageEventSource)
-        endif
-        
+
         return false
     endfunction
 

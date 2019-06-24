@@ -38,7 +38,7 @@ library TacticalVisor initializer init requires TimerUtils, SpellEffectEvent
         local integer i = 0
         local boolean b = false
         call TimerStart(t, 20.0, false, function onBuffEnd)
-        
+        // TODO: 似乎无法叠加重击和暴击
         call UnitAddAbility(u, AB_CODE_BASH)
         call BlzUnitHideAbility(u, AB_CODE_BASH, true)
 

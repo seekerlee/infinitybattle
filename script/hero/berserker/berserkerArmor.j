@@ -7,11 +7,7 @@ library BerserkerArmor initializer Init requires TimerUtils, SpellEffectEvent
         
         private constant string EFF_SHOUT = "Abilities\\Spells\\Other\\HowlOfTerror\\HowlCaster.mdl"
     endglobals
-        
-    private function Requirement takes nothing returns boolean
-        return GetSpellAbilityId() == AB_ID
-    endfunction
-    
+
     private function bleed takes nothing returns nothing
         local unit u = GetUnitById(GetTimerData(GetExpiredTimer()))
         local integer luck
@@ -43,7 +39,7 @@ library BerserkerArmor initializer Init requires TimerUtils, SpellEffectEvent
         local berserkerParam bp = GetTimerData(GetExpiredTimer())
         local unit u = GetUnitById(bp.unitId)
         // color:
-        call SetUnitVertexColor(u, 127, 127, 127, 255)
+        call SetUnitVertexColor(u, 50, 50, 50, 255)
         // life:
         call BlzSetUnitMaxHP(u, BlzGetUnitMaxHP(u) - bp.lifeBonus)
         // set global
@@ -57,10 +53,12 @@ library BerserkerArmor initializer Init requires TimerUtils, SpellEffectEvent
     endfunction
 
     private function Action takes nothing returns boolean
+        // 可以缩小视野范围
         local unit u
         local timer t_bleed
         local timer t_end
         local berserkerParam bp
+        local integer abLvl = 0
         // 5 times life
         local integer max_life_now
         if (GetSpellAbilityId() != AB_ID) then
@@ -70,9 +68,17 @@ library BerserkerArmor initializer Init requires TimerUtils, SpellEffectEvent
         set t_bleed = NewTimerEx(GetUnitId(u))
         set t_end = NewTimer()
         set bp = berserkerParam.create()
-        // 5 times life
+        set abLvl = GetUnitAbilityLevel(u, AB_ID)
         set max_life_now = BlzGetUnitMaxHP(u)
-        call BlzSetUnitMaxHP(u, max_life_now * 5)
+        if abLvl == 1 then
+            set bp.lifeBonus = max_life_now * 3
+        elseif abLvl == 2 then
+            set bp.lifeBonus = max_life_now * 4
+        elseif abLvl == 3 then
+            set bp.lifeBonus = max_life_now * 5
+        endif
+        // 5 times life
+        call BlzSetUnitMaxHP(u, max_life_now + bp.lifeBonus)
         // turn black
         call SetUnitVertexColor(u, 0, 0, 0, 255)
         // visual effect 
@@ -82,7 +88,6 @@ library BerserkerArmor initializer Init requires TimerUtils, SpellEffectEvent
         // update state
         set berserkerStateOn[GetUnitId(u)] = true
         // endtimer
-        set bp.lifeBonus = max_life_now * 4
         set bp.unitId = GetUnitId(u)
         set bp.bleedTimer = t_bleed
         call SetTimerData(t_end, bp)

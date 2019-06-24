@@ -33,13 +33,8 @@ scope DouM initializer Init
         if abilityLvlTianqian == 0 then
             return false
         endif
-        if (abilityLvl == 1) and luck < 15  then
-            call doTianqian(GetTriggerUnit(), GetEventDamageSource(), abilityLvlTianqian)
-        elseif (abilityLvl == 2) and luck < 23  then
-            call doTianqian(GetTriggerUnit(), GetEventDamageSource(), abilityLvlTianqian)
-        elseif (abilityLvl == 3) and luck < 31  then
-            call doTianqian(GetTriggerUnit(), GetEventDamageSource(), abilityLvlTianqian)
-        elseif (abilityLvl == 4) and luck < 40  then
+        // give a 15% - 40% posibility
+        if luck < (15 + 2.5 * (abilityLvl - 1))  then
             call doTianqian(GetTriggerUnit(), GetEventDamageSource(), abilityLvlTianqian)
         endif
         return false
@@ -47,17 +42,42 @@ scope DouM initializer Init
     
     private function Action takes nothing returns boolean
         local trigger t
+        local integer i = 0
+        local integer randome = 0
         if (GetLearnedSkill() == ID_DOUM and GetLearnedSkillLevel() == 1) then
             set t = CreateTrigger()
             call TriggerRegisterUnitEvent( t, GetTriggerUnit(), EVENT_UNIT_DAMAGED )
             call TriggerAddCondition(t, Condition(function ActionRevenge))
             set t = null
         endif
+        // if (GetLearnedSkill() == ID_DOUM) then
+        //     loop
+        //         exitwhen i == 1
+        //         set randome = GetRandomInt(1, 100000)
+        //         call BJDebugMsg(I2S(i) + ": " + I2S(randome))
+        //         call BlzSetAbilityTooltip(ID_DOUM, "ability tooltip lvl: " + I2S(i), i)
+        //         call BlzSetAbilityExtendedTooltip(ID_DOUM, "ability extended tooltip: " + I2S(i), i)
+        //         call BlzSetAbilityResearchTooltip(ID_DOUM, "ability research tooltip: " + I2S(randome), i)
+        //         call BlzSetAbilityResearchExtendedTooltip(ID_DOUM, "ability research extended tooltip: " + I2S(randome), i)
+                
+        //         set i = i + 1
+        //     endloop
+        // endif
         return false
     endfunction
 
     private function Init takes nothing returns nothing
         call RegisterAnyPlayerUnitEvent(EVENT_PLAYER_HERO_SKILL, function Action)
+        // loop
+        //     exitwhen i == 10
+
+        //     call BlzSetAbilityTooltip(ID_DOUM, "ability tooltip lvl: " + I2S(i), i)
+        //     call BlzSetAbilityExtendedTooltip(ID_DOUM, "ability extended tooltip: " + I2S(i), i)
+        //     call BlzSetAbilityResearchTooltip(ID_DOUM, "ability research tooltip: " + I2S(i), i)
+        //     call BlzSetAbilityResearchExtendedTooltip(ID_DOUM, "ability research extended tooltip: " + I2S(i), i)
+            
+        //     set i = i + 1
+        // endloop
     endfunction
 
 endscope

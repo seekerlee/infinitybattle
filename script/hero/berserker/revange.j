@@ -4,8 +4,6 @@ scope Revange initializer Init
         private constant integer ID_ABILITY = 'A00J'
         private constant integer ID_ABILITY_BUFF = 'A00K'
         private constant integer ID_ABILITY_BUFF2 = 'A00M'
-        private constant real PERCENT_LIFE_RESTORE = 40.0
-        
     endglobals
          
        
@@ -28,25 +26,19 @@ scope Revange initializer Init
     
     private function Action takes nothing returns nothing
         local integer abliLvl = GetUnitAbilityLevel(udg_DamageEventTarget, ID_ABILITY)
-        local integer luck = GetRandomInt(1, 100)
+        local real luck = GetRandomReal(0, 100.0)
         // call SetHeroLevel(udg_DamageEventTarget, 100, true) // test
-        if (abliLvl == 1) and luck > 6 then
-            return
-        elseif (abliLvl == 2) and luck > 9 then
-            return
-        elseif (abliLvl == 3) and luck > 12 then
-            return
-        elseif (abliLvl == 4) and luck > 15 then
-            return 
-        endif
+
+        set luck = luck - 6 - (abliLvl - 1) * 1.66 // 6 - 15
         
-        call addBuff(udg_DamageEventTarget)
+        if luck < 0 then
+            call addBuff(udg_DamageEventTarget)
+        endif
     endfunction
 
     private function Requirement takes nothing returns boolean
         if 0 < GetUnitAbilityLevel(udg_DamageEventTarget, ID_ABILITY) then
             call Action()
-            return false
         endif
         return false
     endfunction

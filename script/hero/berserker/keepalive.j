@@ -10,9 +10,10 @@ scope KeepAlive initializer Init
         private integer u_keep_count = 0
     endglobals
 
-    private function lifeFormular takes real percent_current returns real
+    private function lifeFormular takes integer abLvl, real percent_current returns real
+        // 每秒增长生命, lvl 1 - lvl 10: 2% - 5%
         //local real addpercent = 3.5 * (1 - percent_current / 50) * TIME_INTERVAL
-        return 5 * (1 - percent_current / PERCENT_LIFE_RESTORE) * TIME_INTERVAL
+        return (2 + 0.333 * (abLvl - 1)) * (1 - percent_current / PERCENT_LIFE_RESTORE) * TIME_INTERVAL
     endfunction
     
     private function ActionCheckAndBuff takes nothing returns boolean
@@ -26,7 +27,7 @@ scope KeepAlive initializer Init
             if IsUnitAliveBJ(u) then
                 set lifePercent = GetUnitLifePercent(u)
                 if (lifePercent < PERCENT_LIFE_RESTORE) then
-                    call SetUnitLifePercentBJ(u, lifePercent + lifeFormular(lifePercent))
+                    call SetUnitLifePercentBJ(u, lifePercent + lifeFormular(GetUnitAbilityLevel(u, ABLITY_KEEPLIVE), lifePercent))
                 endif
             endif
 
