@@ -1,4 +1,4 @@
-library Gaizhonggai initializer init requires UnitDex, GroupUtils
+library Gaizhonggai initializer init requires UnitDex, GroupUtils, RegisterPlayerUnitEvent
     globals
         private constant integer SKELETON_ID = 'u002'
         private constant string BIG_EFF = "Abilities\\Spells\\NightElf\\BattleRoar\\RoarCaster.mdl"

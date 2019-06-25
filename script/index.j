@@ -78,6 +78,7 @@
 //! import "hero\nec\Unsummon.j"
 
 //! import "hero\soldier76\Flee.j"
+//! import "hero\soldier76\HealStick.j"
 //! import "hero\soldier76\HelixRockets.j"
 //! import "hero\soldier76\TacticalVisor.j"
 
