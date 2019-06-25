@@ -22,6 +22,13 @@ library HealStick initializer init requires RegisterPlayerUnitEvent
             call BlzSetAbilityExtendedTooltip(S67_AB_ID, "在地上放置一个生物力场。每秒回复500范围内友军" + I2S(2 * i) + "%的生命，持续20秒。", i - 1)
             set i = i + 1
         endloop
+        set i = 0
+        loop
+            exitwhen i > 10
+            call BlzSetAbilityTooltip('A00W', "爆头 - [|cffffcc00等级 " + I2S(i) + "|r]", i - 1)
+            call BlzSetAbilityExtendedTooltip('A00W', "有15%的概率爆头，造成" + I2S(i + 1) + "倍伤害。", i - 1)
+            set i = i + 1
+        endloop
         call RegisterAnyPlayerUnitEvent(EVENT_PLAYER_UNIT_SUMMON, function Actions)
     endfunction
 endlibrary
