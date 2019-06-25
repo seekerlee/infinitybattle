@@ -98,6 +98,13 @@ library HelixRockets initializer init requires SpellEffectEvent, Knockback, Grou
     private function init takes nothing returns nothing
         local trigger t = CreateTrigger()
         //local trigger tClapped = CreateTrigger()
+        local integer i = 1
+        loop
+            exitwhen i > 10
+            call BlzSetAbilityTooltip(AB_ID_ROCKET, "螺旋飞弹(|cffffcc00T|r) - [|cffffcc00等级 " + I2S(i) + "|r]", i - 1)
+            call BlzSetAbilityExtendedTooltip(AB_ID_ROCKET, "螺旋飞弹从脉冲步枪中以螺旋方式射出。火箭可以对350范围内的敌人造成" + I2S(100 * i) + "点伤害，并击退敌人，减慢移动速度和攻击速度，持续5秒。", i - 1)
+            set i = i + 1
+        endloop
         
         call TriggerRegisterVariableEvent( t, "udg_DamageEvent", EQUAL, 1.00 )
         call TriggerAddCondition(t, Condition(function onHit))
