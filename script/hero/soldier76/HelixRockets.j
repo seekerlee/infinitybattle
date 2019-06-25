@@ -2,6 +2,8 @@ library HelixRockets initializer init requires SpellEffectEvent, Knockback, Grou
     
     globals
         private constant integer BUF_ID_BASH = 'B003'
+        private constant integer AB_ID_ROCKET = 'A00V'
+        private constant integer AB_ID_CLAP = 'A00U'
     endglobals
 
     struct fallback
@@ -31,8 +33,15 @@ library HelixRockets initializer init requires SpellEffectEvent, Knockback, Grou
         endmethod
     endstruct
 
+    private function castClap takes nothing returns nothing
+        local xecast xc = GetTimerData( GetExpiredTimer() )
+        call xc.castImmediate()
+        call ReleaseTimer(GetExpiredTimer())
+    endfunction
+
     private function onHit takes nothing returns boolean
         local integer lvl = GetUnitAbilityLevel(udg_DamageEventTarget, BUF_ID_BASH)
+        local timer t
         local real x1
         local real y1
         local real x2
@@ -47,11 +56,14 @@ library HelixRockets initializer init requires SpellEffectEvent, Knockback, Grou
         call UnitRemoveAbility(udg_DamageEventTarget, BUF_ID_BASH)
 
         set xc = xecast.createA()
-        set xc.abilityid    = 'A00U'
+        set xc.abilityid    = AB_ID_CLAP
         set xc.orderstring  = "thunderclap"
-        set xc.level = 1
+        set xc.level = GetUnitAbilityLevel(udg_DamageEventSource, AB_ID_ROCKET)
         set xc.owningplayer = GetOwningPlayer(udg_DamageEventSource)
-        call xc.castInPoint(GetUnitX(udg_DamageEventTarget), GetUnitY(udg_DamageEventTarget))
+        set xc.sourcex = GetUnitX(udg_DamageEventTarget)
+        set xc.sourcey = GetUnitY(udg_DamageEventTarget)
+        set t = NewTimerEx(xc)
+        call TimerStart(t, 0.0, false, function castClap)
 
         call GroupUnitsInArea(ENUM_GROUP, GetUnitX(udg_DamageEventTarget), GetUnitY(udg_DamageEventTarget), 200.)
         set size = BlzGroupGetSize(ENUM_GROUP)
@@ -68,15 +80,15 @@ library HelixRockets initializer init requires SpellEffectEvent, Knockback, Grou
             endif
             set i = i + 1
         endloop
-        
+        set t = null
         return false
     endfunction
 
     private function onAbAdded takes nothing returns boolean
         local xecast xe = xeEventeDummy
         local ability ab
-        if xe.abilityid == 'A00U' then
-            set ab = BlzGetUnitAbility(xeTriggerUnit, 'A00U')
+        if xe.abilityid == AB_ID_CLAP then
+            set ab = BlzGetUnitAbility(xeTriggerUnit, AB_ID_CLAP)
             call BlzSetAbilityRealLevelField(ab, ABILITY_RLF_AOE_DAMAGE, 0, 100.0)
             set ab = null
         endif
@@ -96,6 +108,6 @@ library HelixRockets initializer init requires SpellEffectEvent, Knockback, Grou
         set t = null
         // set tClapped = null
         // init_body
-        call RegisterSpellEffectEvent('A00V', function fallback.onCast)
+        call RegisterSpellEffectEvent(AB_ID_ROCKET, function fallback.onCast)
     endfunction
 endlibrary

@@ -19,9 +19,9 @@ library Gaizhonggai initializer init requires UnitDex, GroupUtils
         set armorEnhanced  = R2I( (.5 + 0.15 * gai_lvl) * BlzGetUnitArmor(master) + BlzGetUnitArmor(skeleton) )
 
         if GetRandomInt(0, 99) < 15 then
-            set lifeEnhanced = lifeEnhanced * 6
-            set damageEnhanced = damageEnhanced * 6
-            set armorEnhanced = armorEnhanced * 6
+            set lifeEnhanced = lifeEnhanced * 5
+            set damageEnhanced = damageEnhanced * 5
+            set armorEnhanced = armorEnhanced * 5
             call SetUnitScale(skeleton, 1.5, 1.5, 2)
             call SetUnitVertexColor(skeleton, 255, 84, 84, 255)
             call DestroyEffect( AddSpecialEffectTarget(BIG_EFF, skeleton, "origin") )

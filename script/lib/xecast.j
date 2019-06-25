@@ -376,6 +376,23 @@ struct xecast[MAXINSTANCES]
             call this.destroy()
         endif
     endmethod
+    
+    // edit by me
+    method castImmediate takes nothing returns nothing
+     local unit dummy
+        //! runtextmacro xecast_allocdummy()
+        if (.customsource) then
+            call SetUnitFlyHeight(dummy,.sourcez,0.0)
+        endif
+        call SetUnitX(dummy,.sourcex)
+        call SetUnitY(dummy,.sourcey)
+        call IssueImmediateOrderById(dummy,this.oid)
+        //! runtextmacro xecast_deallocdummy()
+        if(.autodestroy ) then
+            call this.destroy()
+        endif
+    endmethod
+
     method castInLoc takes location loc returns nothing
         //debug call BJDebugMsg("Warning: Locations are in use")
         //nah but I should 
