@@ -46,7 +46,7 @@ library skyfall initializer init requires SpellEffectEvent
         
             set xc = xecast.createA()
             set xc.abilityid    = 'A00B'
-            set xc.level        = 1
+            set xc.level        = GetUnitAbilityLevel(u, AB_ID)
             set xc.orderstring  = "stomp"
             set xc.owningplayer = GetOwningPlayer(u)
         
@@ -96,6 +96,13 @@ library skyfall initializer init requires SpellEffectEvent
     endfunction
     
     private function init takes nothing returns nothing
+        local integer i = 1
+        loop
+            exitwhen i > 10
+            call BlzSetAbilityTooltip(AB_ID, "物理天谴(|cffffcc00W|r) - [|cffffcc00等级 " + I2S(i) + "|r]", i - 1)
+            call BlzSetAbilityExtendedTooltip(AB_ID, "英雄对目标地点腾空而起，在落地时对300范围内的敌人造成" + I2S(100 + (i - 1) * 50 ) + "点伤害并使其眩晕" + R2S(3.0 + (i - 1) / 3.0 ) + "秒", i - 1)
+            set i = i + 1
+        endloop
         call RegisterSpellEffectEvent(AB_ID, function onCast)
     endfunction
 

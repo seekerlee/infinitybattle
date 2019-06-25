@@ -19,8 +19,8 @@ library Thunderblade initializer Init
 
     endfunction
     
-    private function ActionRevenge takes nothing returns boolean
-        local integer luck = GetRandomInt(0, 99)
+    private function Action takes nothing returns boolean
+        local real luck = GetRandomReal(0, 99)
         local integer abilityLvl = GetUnitAbilityLevel(udg_DamageEventSource, ID_TB)
         local integer abilityLvlTianqian = GetUnitAbilityLevel(udg_DamageEventSource, ID_TIANQIAN)
         // if udg_IsDamageSpell then
@@ -32,23 +32,26 @@ library Thunderblade initializer Init
         if IsPlayerAlly(GetOwningPlayer(udg_DamageEventTarget), GetOwningPlayer(udg_DamageEventSource)) then
             return false
         endif
-        if (abilityLvl == 1) and luck < 15  then
-            call doTianqian(udg_DamageEventSource, udg_DamageEventTarget, abilityLvlTianqian)
-        elseif (abilityLvl == 2) and luck < 23  then
-            call doTianqian(udg_DamageEventSource, udg_DamageEventTarget, abilityLvlTianqian)
-        elseif (abilityLvl == 3) and luck < 31  then
-            call doTianqian(udg_DamageEventSource, udg_DamageEventTarget, abilityLvlTianqian)
-        elseif (abilityLvl == 4) and luck < 40  then
+
+        if luck < 15.0 + (abilityLvl - 1) * 25.0 / 9.0  then
             call doTianqian(udg_DamageEventSource, udg_DamageEventTarget, abilityLvlTianqian)
         endif
+        
         return false
     endfunction
     
     private function Init takes nothing returns nothing
         local trigger t = CreateTrigger()
+        local integer i = 1
+        loop
+            exitwhen i > 10
+            call BlzSetAbilityTooltip(ID_TB, "被动天谴 - [|cffffcc00等级 " + I2S(i) + "|r]", i - 1)
+            call BlzSetAbilityExtendedTooltip(ID_TB, "伤害敌人时有 "+ R2S(15.0 + (i - 1) * 25.0 / 9.0)+"% 几率对敌人释放当前等级的天谴技能。", i - 1)
+            set i = i + 1
+        endloop
         
         call TriggerRegisterVariableEvent( t, "udg_DamageEvent", EQUAL, 1.00 )
-        call TriggerAddCondition(t, Condition(function ActionRevenge))
+        call TriggerAddCondition(t, Condition(function Action))
         
         set t = null
     endfunction

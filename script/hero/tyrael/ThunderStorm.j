@@ -57,14 +57,15 @@ library ThunderStorm initializer Init requires GroupUtils, UnitDex
         static method onSpellCast takes nothing returns boolean
             local unit u
             local thistype this
+            local real interval
             if GetSpellAbilityId() != ID_THUNDERSTORM then
                 return false
             endif
             set u = GetTriggerUnit()
             set this = GetUnitId(u)
             set this.castTimer = NewTimerEx(this)
-            
-            call TimerStart(this.castTimer, 0.3, true, function thistype.dianliao)
+            set interval = 1.0 - (GetUnitAbilityLevel(u, ID_THUNDERSTORM) - 1) / 3.0
+            call TimerStart(this.castTimer, interval, true, function thistype.dianliao)
             set this.lighteff = AddSpecialEffectTarget( LIGHTSHIELD , u, "origin")
             // weather
             call EnableWeatherEffect( weather, true )

@@ -34,7 +34,7 @@ scope DouM initializer Init
             return false
         endif
         // give a 15% - 40% posibility
-        if luck < (15 + 2.5 * (abilityLvl - 1))  then
+        if luck < (15 + 2.77 * (abilityLvl - 1))  then
             call doTianqian(GetTriggerUnit(), GetEventDamageSource(), abilityLvlTianqian)
         endif
         return false
@@ -50,34 +50,19 @@ scope DouM initializer Init
             call TriggerAddCondition(t, Condition(function ActionRevenge))
             set t = null
         endif
-        // if (GetLearnedSkill() == ID_DOUM) then
-        //     loop
-        //         exitwhen i == 1
-        //         set randome = GetRandomInt(1, 100000)
-        //         call BJDebugMsg(I2S(i) + ": " + I2S(randome))
-        //         call BlzSetAbilityTooltip(ID_DOUM, "ability tooltip lvl: " + I2S(i), i)
-        //         call BlzSetAbilityExtendedTooltip(ID_DOUM, "ability extended tooltip: " + I2S(i), i)
-        //         call BlzSetAbilityResearchTooltip(ID_DOUM, "ability research tooltip: " + I2S(randome), i)
-        //         call BlzSetAbilityResearchExtendedTooltip(ID_DOUM, "ability research extended tooltip: " + I2S(randome), i)
-                
-        //         set i = i + 1
-        //     endloop
-        // endif
+        
         return false
     endfunction
 
     private function Init takes nothing returns nothing
+        local integer i = 1
+        loop
+            exitwhen i > 10
+            call BlzSetAbilityTooltip(ID_DOUM, "抖M天谴 - [|cffffcc00等级 " + I2S(i) + "|r]", i - 1)
+            call BlzSetAbilityExtendedTooltip(ID_DOUM, "受到伤害时有 "+ R2S(15 + 2.77 * (i - 1))+"% 几率对敌人释放当前等级的天谴技能。", i - 1)
+            set i = i + 1
+        endloop
         call RegisterAnyPlayerUnitEvent(EVENT_PLAYER_HERO_SKILL, function Action)
-        // loop
-        //     exitwhen i == 10
-
-        //     call BlzSetAbilityTooltip(ID_DOUM, "ability tooltip lvl: " + I2S(i), i)
-        //     call BlzSetAbilityExtendedTooltip(ID_DOUM, "ability extended tooltip: " + I2S(i), i)
-        //     call BlzSetAbilityResearchTooltip(ID_DOUM, "ability research tooltip: " + I2S(i), i)
-        //     call BlzSetAbilityResearchExtendedTooltip(ID_DOUM, "ability research extended tooltip: " + I2S(i), i)
-            
-        //     set i = i + 1
-        // endloop
     endfunction
 
 endscope
