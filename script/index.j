@@ -26,6 +26,7 @@
 //! import "lib\BonusMod.j"
 //! import "lib\DamageEngine.j"
 //! import "lib\FloatingTextArc.j"
+//! import "lib\HeroSkillEvent.j"
 //! import "lib\IsUnitMoving.j"
 //! import "lib\Knockback.j"
 //! import "lib\OrderEvent.j"

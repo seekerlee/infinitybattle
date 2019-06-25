@@ -1,22 +1,13 @@
-library AddUnSummon initializer init requires RegisterPlayerUnitEvent
-
-    function Trig_addsummonskillActions takes nothing returns nothing
-        local unit uu = GetTriggerUnit()
+library AddUnSummon initializer init requires HeroSkillEvent
+    private function addsummonskillActions takes nothing returns boolean
         // add unsummon skill
-        if (GetUnitAbilityLevel(uu, 'A004') == 0) then
-            call UnitAddAbility(uu, 'A004')
-        endif
-        set uu = null
-    endfunction
-
-    function Trig_addsummonskillConditions takes nothing returns boolean
-        if GetLearnedSkillBJ() == 'A001' then
-            call Trig_addsummonskillActions()
+        if GetUnitAbilityLevel(GetLearningUnit(), 'A004') == 0 then
+            call UnitAddAbility(GetLearningUnit(), 'A004')
         endif
         return false
     endfunction
 
     private function init takes nothing returns nothing
-        call RegisterAnyPlayerUnitEvent(EVENT_PLAYER_HERO_SKILL, function Trig_addsummonskillConditions)
+        call RegisterHeroSkillEvent('A001', function addsummonskillActions)
     endfunction
 endlibrary
