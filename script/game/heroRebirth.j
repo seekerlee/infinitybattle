@@ -1,18 +1,17 @@
-library heroRebirth initializer Init requires TimerUtils, RegisterPlayerUnitEvent, UnitDex
+library HeroRebirth initializer Init requires TimerUtils, RegisterPlayerUnitEvent, UnitDex, HeroSelect, Util
 
     globals
         private constant real TIME_REBORN = 15.0
         private constant timerdialog array tda
     endglobals
 
-    
     private function DoRebirth takes nothing returns nothing
         local timer t = GetExpiredTimer()
         local integer uIndex = GetTimerData(t)
         local timerdialog td = tda[uIndex]
         local unit hero = GetUnitById(uIndex)
         
-        call ReviveHero(hero, GetLocationX(GetRectCenter(gg_rct_born)), GetLocationY(GetRectCenter(gg_rct_born)), true)
+        call ReviveHero(hero, 0.0, 0.0, true)
         
         call DestroyTimerDialog(td)
         call ReleaseTimer(t)
@@ -27,7 +26,8 @@ library heroRebirth initializer Init requires TimerUtils, RegisterPlayerUnitEven
         local timerdialog td 
         local unit dyingU = GetDyingUnit()
         local integer uIndex
-        if (IsUnitInGroup(dyingU, heroSelect_PLAYER_HEROS)) then
+        if (IsUnitInGroup(dyingU, HeroSelect_PLAYER_HEROS)) then
+            call broadCastBAD(GetUnitName(dyingU) + "挂了，他将在" + R2S(TIME_REBORN) + "秒后复活")
             set uIndex = GetUnitUserData(dyingU)
             set t = NewTimerEx(uIndex)
             set td = CreateTimerDialog(t)

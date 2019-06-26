@@ -1,0 +1,7 @@
+ulev 等级
+uhpm 生命
+umpm 魔法
+ua1b 基础伤害
+ua2b 基础伤害
+udef 基础防御
+vmvs 基础速度

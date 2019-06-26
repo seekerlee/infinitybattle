@@ -10,7 +10,7 @@ library Unsummon initializer init requires RegisterPlayerUnitEvent, Gaizhonggai
             call PauseUnit(GetSpellAbilityUnit(), true)
             call IssueImmediateOrder(GetSpellAbilityUnit(), "stop")
             call PauseUnit(GetSpellAbilityUnit(), false)
-            call DisplayTextToPlayer(GetTriggerPlayer(), 0, 0, "|cffffcc00you can only unsummon your slaves|r")
+            call DisplayTextToPlayer(GetTriggerPlayer(), 0, 0, "|cffffcc00你只能反召唤自己的骷髅|r")
         endif
         // warn
         set tmpG = null

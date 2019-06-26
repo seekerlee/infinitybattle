@@ -6,7 +6,6 @@ library TacticalVisor initializer init requires TimerUtils, SpellEffectEvent
         private constant integer AB_CODE_CRITICAL = 'A00W'
         private constant integer AB_CODE_BASH = 'A010'
         
-        private constant real RANGE_BONUS = 2500.0
         private constant real CHANCE_BUF = 80.0
         private constant real CHANCE_ORIGIN_BUF = 15.0
     endglobals
@@ -37,9 +36,10 @@ library TacticalVisor initializer init requires TimerUtils, SpellEffectEvent
         local ability ab
         local integer i = 0
         local boolean b = false
-        call TimerStart(t, 20.0, false, function onBuffEnd)
-        // TODO: 似乎无法叠加重击和暴击
-        // call UnitAddAbility(u, AB_CODE_BASH)
+        local integer lvl = GetUnitAbilityLevel(u, AB_CODE_VISOR)
+        call TimerStart(t, 15.0 + (lvl - 1) * 5.0, false, function onBuffEnd)
+        
+        call UnitAddAbility(u, AB_CODE_BASH)
         call BlzUnitHideAbility(u, AB_CODE_BASH, true)
 
         if GetUnitAbilityLevel(u, AB_CODE_CRITICAL) > 0 then

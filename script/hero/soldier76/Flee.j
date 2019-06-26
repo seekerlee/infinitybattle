@@ -31,6 +31,13 @@ library Flee initializer init requires SpellEffectEvent, TimerUtils, UnitDex
     endfunction
 
     private function init takes nothing returns nothing
+        local integer i = 1
+        loop
+            exitwhen i > 10
+            call BlzSetAbilityTooltip(AB_CODE_FLEE, "冲刺(|cffffcc00B|r) - [|cffffcc00等级 " + I2S(i) + "|r]", i - 1)
+            call BlzSetAbilityExtendedTooltip(AB_CODE_FLEE, "增加80%的移动速度，可以让英雄随意穿梭于人群，并且有" + I2S(15 + 7 * (i - 1)) + "%概率闪避敌人的攻击。", i - 1)
+            set i = i + 1
+        endloop
         call RegisterSpellEffectEvent(AB_CODE_FLEE, function onCast)
     endfunction
 endlibrary
