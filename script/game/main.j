@@ -43,6 +43,7 @@ library main initializer init requires Table, Spawn, Jaina, Battle, HeroSelect, 
             call rewardAllPlayer(300, 1)
         endif
         call ClearDamage()
+        
         set currentWave = currentWave + 1
         call startWaiting()
         return false

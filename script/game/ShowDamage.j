@@ -85,8 +85,8 @@ library ShowDamage initializer init
 
 
     private function init takes nothing returns nothing
-        local trigger t = CreateTrigger()
-        call TriggerRegisterVariableEvent( t, "udg_DamageEvent", EQUAL, 1.00 )
-        call TriggerAddAction( t, function Trig_Damage_Tag_Actions )
+        // local trigger t = CreateTrigger()
+        // call TriggerRegisterVariableEvent( t, "udg_DamageEvent", EQUAL, 1.00 )
+        // call TriggerAddAction( t, function Trig_Damage_Tag_Actions )
     endfunction
 endlibrary

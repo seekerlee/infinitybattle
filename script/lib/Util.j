@@ -4,7 +4,7 @@ library Util requires ARGB
         private constant integer RGB_BAD = 0xFFFF0000 // red
         private constant integer RGB_INFO = 0xFF3399FF // blue
         private constant integer RGB_WARN = 0xFFFFFF00 // yellow
-        
+
         private constant string BOUNTY_ART = "UI\\Feedback\\GoldCredit\\GoldCredit.mdl"
     endglobals
 
@@ -44,7 +44,6 @@ library Util requires ARGB
         return r
     endfunction
 
-    //
     private function playGold takes nothing returns boolean
         if IsUnitType(GetFilterUnit(), UNIT_TYPE_HERO) then
             call DestroyEffect(AddSpecialEffectTarget(BOUNTY_ART, GetFilterUnit(), "head"))
@@ -63,6 +62,20 @@ library Util requires ARGB
             call SetPlayerState(p.toPlayer(), PLAYER_STATE_RESOURCE_LUMBER, GetPlayerState(p.toPlayer(), PLAYER_STATE_RESOURCE_LUMBER) + lumber)
             set p = p.next
         endloop
+    endfunction
+
+    function maxInt takes integer x, integer y returns integer
+        if x > y then
+            return x
+        endif
+        return y
+    endfunction
+
+    function maxReal takes real x, real y returns real
+        if x > y then
+            return x
+        endif
+        return y
     endfunction
 
     //call BJDebugMsg( Degrade("Hello" , 0xFFFF0000, 0xFF0000FF ) )

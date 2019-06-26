@@ -48,6 +48,7 @@
 // game play
 //! import "game\Battle.j"
 //! import "game\CreepCamp.j"
+//! import "game\CreepTable.j"
 //! import "game\Diffculty.j"
 //! import "game\heroRebirth.j"
 //! import "game\heroSelect.j"

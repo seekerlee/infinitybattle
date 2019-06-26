@@ -29,7 +29,7 @@ scope Revange initializer Init
         local real luck = GetRandomReal(0, 100.0)
         // call SetHeroLevel(udg_DamageEventTarget, 100, true) // test
 
-        set luck = luck - 6 - (abliLvl - 1) * 1.66 // 6 - 15
+        set luck = luck - 2 - (abliLvl - 1) * 8 / 9 // 6 - 15
         
         if luck < 0 then
             call addBuff(udg_DamageEventTarget)

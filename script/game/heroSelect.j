@@ -19,8 +19,8 @@ library HeroSelect requires RegisterPlayerUnitEvent, MapConst, Util
             call SetPlayerMaxHeroesAllowed(0, Player(index))
             call GroupAddUnit(PLAYER_HEROS, hero)
             if BlzGroupGetSize(PLAYER_HEROS) == humanCount then
-                call TriggerEvaluate(T_SELECT_DONE)
                 call broadCastINFO("选择英雄完毕...")
+                call TriggerEvaluate(T_SELECT_DONE)
             endif
             loop
                 exitwhen index == bj_MAX_PLAYERS 

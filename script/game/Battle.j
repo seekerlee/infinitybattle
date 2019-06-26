@@ -3,6 +3,7 @@ library Battle requires MapConst, RegisterPlayerUnitEvent, Spawn, GroupUtils
     globals
         private trigger tOnBattleEnd
         group currentWaveGroup
+
     endglobals
 
     function registerOnBattleEnd takes code func returns nothing
@@ -11,7 +12,10 @@ library Battle requires MapConst, RegisterPlayerUnitEvent, Spawn, GroupUtils
 
     function createEnemy takes nothing returns nothing
         local enemyConfig enemyConfigList = enemyConfig.create()
-        call enemyConfigList.addEnemy('hkni', 20)
+        call enemyConfigList.addEnemy(getRandomIdOfType(typeMelee), 5)
+        call enemyConfigList.addEnemy(getRandomIdOfType(typeMelee), 5)
+        call enemyConfigList.addEnemy(getRandomIdOfType(typeMelee), 5)
+        call enemyConfigList.addEnemy(getRandomIdOfType(typeMelee), 5)
         call SpawnPointAttack(currentWaveGroup, P_DARK, enemyConfigList, GetRectCenterX(RCT_TOPCENTER), GetRectCenterY(RCT_TOPCENTER), 0.0, 0.0)
         call SpawnPointAttack(currentWaveGroup, P_DARK, enemyConfigList, GetRectCenterX(RCT_CENTERLEFT), GetRectCenterY(RCT_CENTERLEFT), 0.0, 0.0)
         call SpawnPointAttack(currentWaveGroup, P_DARK, enemyConfigList, GetRectCenterX(RCT_CENTERRIGHT), GetRectCenterY(RCT_CENTERRIGHT), 0.0, 0.0)
@@ -24,16 +28,17 @@ library Battle requires MapConst, RegisterPlayerUnitEvent, Spawn, GroupUtils
     endfunction
 
     private function enemyDeath takes nothing returns boolean
-        call GroupRemoveUnit(currentWaveGroup, GetDyingUnit())
-        if BlzGroupGetSize(currentWaveGroup) == 0 then
-            call GroupClear(currentWaveGroup)
-            call TriggerEvaluate(tOnBattleEnd)
+        if IsUnitInGroup(GetDyingUnit(), currentWaveGroup) then
+            call GroupRemoveUnit(currentWaveGroup, GetDyingUnit())
+            if BlzGroupGetSize(currentWaveGroup) == 0 then
+                call GroupClear(currentWaveGroup)
+                call TriggerEvaluate(tOnBattleEnd)
+            endif
         endif
         return false
     endfunction
 
     private function onStopMoving takes nothing returns nothing
-        // call DisplayTextToForce( GetPlayersAll(), ( GetUnitName(GetUnitById(moveEventUnitId)) + " has stopped moving!" ) )
         if IsUnitInGroup(GetUnitById(moveEventUnitId), currentWaveGroup) then
             call IssuePointOrder(GetUnitById(moveEventUnitId), "attack", 0.0, 0.0)
         endif

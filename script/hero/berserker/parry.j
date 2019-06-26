@@ -54,7 +54,7 @@ library Parry initializer Init requires DamageEngine, SoundTools, BerserkerArmor
             set luck = luck - 15.0
         endif
         // lvl bouns
-        set luck = luck - 10.0 - (parryLvl - 1) * 4.44 //10-50
+        set luck = luck - 10.0 - (parryLvl - 1) * 30.0 / 9.0 //10-40
 
         return luck < 0.0
     endfunction
@@ -85,7 +85,7 @@ library Parry initializer Init requires DamageEngine, SoundTools, BerserkerArmor
             set udg_DamageEventAmount = 0
             call DestroyEffect(AddSpecialEffectTarget( PARRY_EFF , udg_DamageEventTarget, "origin"))
             if (IsUnitInRange(udg_DamageEventTarget, udg_DamageEventSource, PARRY_RANGE)) then
-                set damageBack = 2.0 * udg_DamageEventAmount + I2R(GetHeroStr(udg_DamageEventTarget, true))
+                set damageBack = 10.0 * udg_DamageEventAmount + I2R(GetHeroStr(udg_DamageEventTarget, true))
                 call UnitDamageTarget(udg_DamageEventTarget, udg_DamageEventSource, damageBack, true, false, ATTACK_TYPE_CHAOS, DAMAGE_TYPE_UNKNOWN, null)
                 call createParryUnitFor(udg_DamageEventTarget, udg_DamageEventSource)
             endif

@@ -1,4 +1,4 @@
-library Diffculty initializer init requires Table
+library Diffculty initializer init requires Table, Util
 
 
     globals
@@ -11,10 +11,10 @@ library Diffculty initializer init requires Table
 
         integer maxLvl
 
-        private constant integer LIFE_BONUS_LVL = 5
+        private constant integer LIFE_BONUS_LVL = 10
         private constant integer MANA_BONUS_LVL = 5
-        private constant integer DMG_BONUS_LVL = 2
-        private constant integer ARMOR_BONUS_LVL = 0
+        private constant integer DMG_BONUS_LVL = 4
+        private constant integer ARMOR_BONUS_LVL = 2
 
         private constant integer BASE_HP = 40
         private constant integer BASE_DMG  = 10
@@ -36,23 +36,17 @@ library Diffculty initializer init requires Table
         loop
             exitwhen maxLvl >= targetLvl
 
-            set baseEnhance[maxLvl + 1].rate_maxLife = 1.02 * baseEnhance[maxLvl].rate_maxLife
+            set baseEnhance[maxLvl + 1].rate_maxLife = 1.03 * baseEnhance[maxLvl].rate_maxLife
             set baseEnhance[maxLvl + 1].rate_maxMana = 1.02 * baseEnhance[maxLvl].rate_maxMana
             set baseEnhance[maxLvl + 1].rate_ACD     = 0.99 * baseEnhance[maxLvl].rate_ACD
-            set baseEnhance[maxLvl + 1].rate_damage  = 1.02 * baseEnhance[maxLvl].rate_damage
-            set baseEnhance[maxLvl + 1].rate_armor   = 1.02 * baseEnhance[maxLvl].rate_armor
+            set baseEnhance[maxLvl + 1].rate_damage  = 1.03 * baseEnhance[maxLvl].rate_damage
+            set baseEnhance[maxLvl + 1].rate_armor   = 1.03 * baseEnhance[maxLvl].rate_armor
 
             set maxLvl = maxLvl + 1
         endloop
         return baseEnhance[targetLvl]
     endfunction
 
-    private function maxInt takes integer x, integer y returns integer
-        if x > y then
-            return x
-        endif
-        return y
-    endfunction
 
     function unitApplyEnhance takes unit u, integer lvl returns nothing
         local baseEnhance enh = getEnhance(lvl)
@@ -64,8 +58,8 @@ library Diffculty initializer init requires Table
         call BlzSetUnitBaseDamage(u, R2I( (BASE_DMG + SquareRoot(BlzGetUnitBaseDamage(u, 0) - BASE_DMG)) * enh.rate_damage  ) + lvl * DMG_BONUS_LVL, 0)
         call BlzSetUnitBaseDamage(u, R2I( (BASE_DMG + SquareRoot(BlzGetUnitBaseDamage(u, 1) - BASE_DMG)) * enh.rate_damage  ) + lvl * DMG_BONUS_LVL, 1)
 
-        call BlzSetUnitMaxMana(u,    R2I(BlzGetUnitMaxMana(u) * enh.rate_maxMana)      + lvl * MANA_BONUS_LVL)
-        call BlzSetUnitArmor(u,      BlzGetUnitArmor(u) * enh.rate_armor               + lvl * ARMOR_BONUS_LVL)
+        call BlzSetUnitMaxMana(u,    R2I(BlzGetUnitMaxMana(u) * enh.rate_maxMana)   + lvl * MANA_BONUS_LVL)
+        call BlzSetUnitArmor(u,      maxReal(BlzGetUnitArmor(u), 1.0) * enh.rate_armor + lvl * ARMOR_BONUS_LVL)
         call BlzSetUnitAttackCooldown(u, BlzGetUnitAttackCooldown(u, 0) * enh.rate_ACD, 0)
         call BlzSetUnitIntegerField(u, UNIT_IF_LEVEL, maxInt(R2I(lvl / 2), 1))
 
