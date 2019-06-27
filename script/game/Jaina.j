@@ -20,11 +20,11 @@ library Jaina requires Table, WorldBounds, MapConst
         // call UnitAddAbility(U_JAINA, 'Asud') // 购物
 
         call UnitAddAbility(U_JAINA, 'AHds')
-        call UnitAddAbility(U_JAINA, 'AHhb')
+        call UnitAddAbility(U_JAINA, 'A018') // 圣光
         //call BlzUnitHideAbility(U_JAINA, 'AHds', true)
         //call BlzUnitHideAbility(U_JAINA, 'AHhb', true)
         
-        call AddItemToStock(U_JAINA, 'ajen', 1, 1)
+        // call AddItemToStock(U_JAINA, 'ajen', 1, 1)
     endfunction
 
     private function Action takes nothing returns boolean

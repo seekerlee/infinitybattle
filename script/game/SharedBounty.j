@@ -24,7 +24,7 @@ library SharedBounty initializer init requires RegisterPlayerUnitEvent, GroupUti
     endfunction
 
     private function payBounty takes player p, unit dyingU, integer gold, integer lumber returns nothing
-        call BJDebugMsg("pay: " + I2S(gold))
+        // call BJDebugMsg("pay: " + I2S(gold))
         if gold > 0 then
             call GoldBounty(dyingU, gold, p)
             call SetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) + gold)
@@ -36,7 +36,7 @@ library SharedBounty initializer init requires RegisterPlayerUnitEvent, GroupUti
     endfunction
 
     private function heroEnum takes nothing returns boolean
-        return IsUnitType(GetFilterUnit(), UNIT_TYPE_HERO)
+        return IsUnitType(GetFilterUnit(), UNIT_TYPE_HERO) and not IsUnitAlly(GetDyingUnit(), GetOwningPlayer(GetFilterUnit()))
     endfunction
 
     private function Action takes nothing returns boolean

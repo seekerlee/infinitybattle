@@ -12,6 +12,7 @@ library HeroRebirth initializer Init requires TimerUtils, RegisterPlayerUnitEven
         local unit hero = GetUnitById(uIndex)
         
         call ReviveHero(hero, 0.0, 0.0, true)
+        call SetUnitState(hero, UNIT_STATE_MANA, BlzGetUnitMaxMana(hero))
         
         call DestroyTimerDialog(td)
         call ReleaseTimer(t)
