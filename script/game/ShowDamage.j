@@ -88,5 +88,6 @@ library ShowDamage initializer init
         // local trigger t = CreateTrigger()
         // call TriggerRegisterVariableEvent( t, "udg_DamageEvent", EQUAL, 1.00 )
         // call TriggerAddAction( t, function Trig_Damage_Tag_Actions )
+        // set t = null
     endfunction
 endlibrary

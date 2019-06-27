@@ -57,6 +57,7 @@
 //! import "game\MapConst.j"
 ///! import "game\Minions.j"
 //! import "game\Seconds.j"
+//! import "game\SharedBounty.j"
 //! import "game\Shopping.j"
 //! import "game\ShowDamage.j"
 //! import "game\Spawn.j"

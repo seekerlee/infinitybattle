@@ -20,11 +20,12 @@ library Gaizhonggai initializer init requires UnitDex, GroupUtils, RegisterPlaye
 
         if GetRandomInt(0, 99) < 15 then
             set lifeEnhanced = lifeEnhanced * 5
-            set damageEnhanced = damageEnhanced * 5
+            set damageEnhanced = R2I(damageEnhanced * 1.2)
             set armorEnhanced = armorEnhanced * 5
             call SetUnitScale(skeleton, 1.5, 1.5, 2)
             call SetUnitVertexColor(skeleton, 255, 84, 84, 255)
             call DestroyEffect( AddSpecialEffectTarget(BIG_EFF, skeleton, "origin") )
+            call UnitAddAbility(skeleton, 'A017')
         endif
         call BlzSetUnitArmor(skeleton, armorEnhanced)
         call BlzSetUnitBaseDamage(skeleton, damageEnhanced, 0)
@@ -44,7 +45,7 @@ library Gaizhonggai initializer init requires UnitDex, GroupUtils, RegisterPlaye
             endif
 
             set skeletonG = skeletonGroups[GetUnitId(master)]
-            
+
             call gaiEnhance(sk, master)
             call GroupRefresh(skeletonG)
             call GroupAddUnit(skeletonG, sk)
@@ -64,7 +65,7 @@ library Gaizhonggai initializer init requires UnitDex, GroupUtils, RegisterPlaye
         local group g = skeletonGroups[GetUnitId(GetDyingUnit())]
         if g != null then
             call ForGroup(g, function killU)
-            call ReleaseGroup(g)
+            call GroupClear(g)
         endif
         set g = null
         return false

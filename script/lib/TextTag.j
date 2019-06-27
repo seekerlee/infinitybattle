@@ -65,7 +65,7 @@ endfunction
 //===========================================================================
 //  Standard wc3 gold bounty texttag, displayed only to killing player 
 //===========================================================================
-public function GoldBounty takes unit whichUnit, integer bounty, player killer returns nothing
+function GoldBounty takes unit whichUnit, integer bounty, player killer returns nothing
     local texttag tt = CreateTextTag()
     local string text = "+" + I2S(bounty)
     call SetTextTagText(tt, text, FONT_SIZE)
@@ -81,7 +81,7 @@ public function GoldBounty takes unit whichUnit, integer bounty, player killer r
 endfunction
 
 //==============================================================================
-public function LumberBounty takes unit whichUnit, integer bounty, player killer returns nothing
+function LumberBounty takes unit whichUnit, integer bounty, player killer returns nothing
     local texttag tt = CreateTextTag()
     local string text = "+" + I2S(bounty)
     call SetTextTagText(tt, text, FONT_SIZE)
@@ -156,7 +156,7 @@ public function ShadowStrike takes unit whichUnit, integer dmg, boolean initialD
     call SetTextTagVisibility(tt, true)
     call SetTextTagFadepoint(tt, 2.0)
     call SetTextTagLifespan(tt, 5.0)
-    call SetTextTagPermanent(tt, false)    
+    call SetTextTagPermanent(tt, false)
     set text = null
     set tt = null
 endfunction

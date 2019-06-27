@@ -12,10 +12,15 @@ library Battle requires MapConst, RegisterPlayerUnitEvent, Spawn, GroupUtils
 
     function createEnemy takes nothing returns nothing
         local enemyConfig enemyConfigList = enemyConfig.create()
-        call enemyConfigList.addEnemy(getRandomIdOfType(typeMelee), 5)
-        call enemyConfigList.addEnemy(getRandomIdOfType(typeMelee), 5)
-        call enemyConfigList.addEnemy(getRandomIdOfType(typeMelee), 5)
-        call enemyConfigList.addEnemy(getRandomIdOfType(typeMelee), 5)
+        call enemyConfigList.addEnemy(getRandomIdOfType(typeWeak), 10, currentWave)
+        call enemyConfigList.addEnemy(getRandomIdOfType(typeWeak), 10, currentWave)
+        if currentWave > 9 then
+            call enemyConfigList.addEnemy(getRandomIdOfType(typeNormal), 2, currentWave + 5)
+        endif
+        if currentWave > 14 then
+            call enemyConfigList.addEnemy(getRandomIdOfType(typeStrong), 1, currentWave + 20)
+        endif
+        
         call SpawnPointAttack(currentWaveGroup, P_DARK, enemyConfigList, GetRectCenterX(RCT_TOPCENTER), GetRectCenterY(RCT_TOPCENTER), 0.0, 0.0)
         call SpawnPointAttack(currentWaveGroup, P_DARK, enemyConfigList, GetRectCenterX(RCT_CENTERLEFT), GetRectCenterY(RCT_CENTERLEFT), 0.0, 0.0)
         call SpawnPointAttack(currentWaveGroup, P_DARK, enemyConfigList, GetRectCenterX(RCT_CENTERRIGHT), GetRectCenterY(RCT_CENTERRIGHT), 0.0, 0.0)
@@ -34,6 +39,9 @@ library Battle requires MapConst, RegisterPlayerUnitEvent, Spawn, GroupUtils
                 call GroupClear(currentWaveGroup)
                 call TriggerEvaluate(tOnBattleEnd)
             endif
+        endif
+        if IsUnitType(GetDyingUnit(), UNIT_TYPE_HERO) then
+            call RemoveUnit(GetDyingUnit())
         endif
         return false
     endfunction

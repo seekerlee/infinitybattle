@@ -6,15 +6,17 @@ library Spawn initializer init requires MapConst, GroupUtils, ListT, Diffculty, 
     struct enemyConfig extends array
         readonly integer unitId
         readonly integer count
+        readonly integer enhanceLevel
         readonly real x
         readonly real y
         readonly real targetX
         readonly real targetY
 
-        public method addEnemy takes integer id, integer count returns nothing
+        public method addEnemy takes integer id, integer count, integer enhanceLevel returns nothing
             local enemyConfig e = this.push()
             set e.unitId = id
             set e.count = count
+            set e.enhanceLevel = enhanceLevel
         endmethod
 
         implement ListT // TODO: check destroy
@@ -33,8 +35,7 @@ library Spawn initializer init requires MapConst, GroupUtils, ListT, Diffculty, 
                 exitwhen i == enemyc.count
                 set u = CreateUnit(forPlayer, enemyc.unitId, x, y, 0.0)
                 call GroupAddUnit(creepGroup, u)
-                // call unitApplyEnhance(u, currentWave )
-                call unitApplyEnhance(u, 100 )
+                call unitApplyEnhance(u, enemyc.enhanceLevel )
                 call IssuePointOrder(u, "attack", targetX, targetY)
                 set i = i + 1
             endloop
