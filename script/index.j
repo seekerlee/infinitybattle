@@ -24,6 +24,7 @@
 //! import "lib\ARGB.j"
 //! import "lib\Board.j"
 //! import "lib\BonusMod.j"
+//! import "lib\ClearItems.j"
 //! import "lib\DamageEngine.j"
 //! import "lib\FloatingTextArc.j"
 //! import "lib\HeroSkillEvent.j"
@@ -31,6 +32,7 @@
 //! import "lib\Knockback.j"
 //! import "lib\OrderEvent.j"
 //! import "lib\PlayerUtils.j"
+//! import "lib\Recipe.j"
 
 //! import "lib\RegisterNativeEvent.j"
 //! import "lib\RegisterPlayerUnitEvent.j"
@@ -52,6 +54,7 @@
 //! import "game\Diffculty.j"
 //! import "game\heroRebirth.j"
 //! import "game\heroSelect.j"
+//! import "game\ItemForge.j"
 //! import "game\Jaina.j"
 //! import "game\main.j"
 //! import "game\MapConst.j"

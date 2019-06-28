@@ -72,7 +72,7 @@ library main initializer init requires Table, Spawn, Jaina, Battle, HeroSelect, 
 
     private function init takes nothing returns nothing
         call FogMaskEnable(false)
-        call FogEnable(false)
+        // call FogEnable(false)
         call TimerStart(CreateTimer(), 0, false, function initex)
     endfunction
 endlibrary

@@ -1,8 +1,6 @@
 library Diffculty initializer init requires Table, Util
 
-
     globals
-
         private key MAX_LIFE
         private key MAX_MANA
         private key IAS
@@ -11,10 +9,10 @@ library Diffculty initializer init requires Table, Util
 
         integer maxLvl
 
-        private constant integer LIFE_BONUS_LVL = 10
+        private constant integer LIFE_BONUS_LVL = 40
         private constant integer MANA_BONUS_LVL = 5
         private constant integer DMG_BONUS_LVL = 4
-        private constant integer ARMOR_BONUS_LVL = 2
+        private constant integer ARMOR_BONUS_LVL = 8
 
         private constant integer BASE_HP = 40
         private constant integer BASE_DMG  = 10
