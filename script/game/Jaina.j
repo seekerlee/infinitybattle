@@ -20,7 +20,7 @@ library Jaina requires Table, WorldBounds, MapConst
         // call UnitAddAbility(U_JAINA, 'Asud') // 购物
 
         call UnitAddAbility(U_JAINA, 'AHds')
-        call UnitAddAbility(U_JAINA, 'A018') // 圣光
+        call UnitAddAbility(U_JAINA, 'A019') // 圣光
         //call BlzUnitHideAbility(U_JAINA, 'AHds', true)
         //call BlzUnitHideAbility(U_JAINA, 'AHhb', true)
         

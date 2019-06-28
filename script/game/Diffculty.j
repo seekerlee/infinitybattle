@@ -48,13 +48,17 @@ library Diffculty initializer init requires Table, Util
     endfunction
 
 
-    function unitApplyEnhance takes unit u, integer lvl returns nothing
+    function unitApplyEnhance takes unit u, integer lvl, integer bossLvl returns nothing
         local baseEnhance enh = getEnhance(lvl)
         // call BlzSetUnitMaxHP(u,      R2I(BlzGetUnitMaxHP(u) * enh.rate_maxLife)        + lvl * LIFE_BONUS_LVL)
         // call BlzSetUnitBaseDamage(u, R2I(BlzGetUnitBaseDamage(u, 0) * enh.rate_damage) + lvl * DMG_BONUS_LVL, 0)
         // native SetUnitMoveSpeed    takes unit whichUnit, real newSpeed returns nothing
-
-        call BlzSetUnitMaxHP(u,      R2I( (BASE_HP  + SquareRoot(BlzGetUnitMaxHP(u)         - BASE_HP))  * enh.rate_maxLife ) + lvl * LIFE_BONUS_LVL)
+        local integer life = R2I( (BASE_HP  + SquareRoot(BlzGetUnitMaxHP(u)         - BASE_HP))  * enh.rate_maxLife ) + lvl * LIFE_BONUS_LVL
+        if bossLvl == 1 then
+            call BlzSetUnitMaxHP(u, life * 10)
+        else
+            call BlzSetUnitMaxHP(u, life)
+        endif
         call BlzSetUnitBaseDamage(u, R2I( (BASE_DMG + SquareRoot(BlzGetUnitBaseDamage(u, 0) - BASE_DMG)) * enh.rate_damage  ) + lvl * DMG_BONUS_LVL, 0)
         call BlzSetUnitBaseDamage(u, R2I( (BASE_DMG + SquareRoot(BlzGetUnitBaseDamage(u, 1) - BASE_DMG)) * enh.rate_damage  ) + lvl * DMG_BONUS_LVL, 1)
 
@@ -62,6 +66,7 @@ library Diffculty initializer init requires Table, Util
         call BlzSetUnitArmor(u,      maxReal(BlzGetUnitArmor(u), 1.0) * enh.rate_armor + lvl * ARMOR_BONUS_LVL)
         call BlzSetUnitAttackCooldown(u, BlzGetUnitAttackCooldown(u, 0) * enh.rate_ACD, 0)
         call BlzSetUnitIntegerField(u, UNIT_IF_LEVEL, maxInt(R2I(lvl / 2), 1))
+
 
         call SetUnitState(u, UNIT_STATE_LIFE, BlzGetUnitMaxHP(u))
         call SetUnitState(u, UNIT_STATE_MANA, BlzGetUnitMaxMana(u))

@@ -7,16 +7,18 @@ library Spawn initializer init requires MapConst, GroupUtils, ListT, Diffculty, 
         readonly integer unitId
         readonly integer count
         readonly integer enhanceLevel
+        readonly integer bossLvl // 0 not boss
         readonly real x
         readonly real y
         readonly real targetX
         readonly real targetY
 
-        public method addEnemy takes integer id, integer count, integer enhanceLevel returns nothing
+        public method addEnemy takes integer id, integer count, integer enhanceLevel, integer bossLvl returns nothing
             local enemyConfig e = this.push()
             set e.unitId = id
             set e.count = count
             set e.enhanceLevel = enhanceLevel
+            set e.bossLvl = bossLvl
         endmethod
 
         implement ListT // TODO: check destroy
@@ -35,7 +37,7 @@ library Spawn initializer init requires MapConst, GroupUtils, ListT, Diffculty, 
                 exitwhen i == enemyc.count
                 set u = CreateUnit(forPlayer, enemyc.unitId, x, y, 0.0)
                 call GroupAddUnit(creepGroup, u)
-                call unitApplyEnhance(u, enemyc.enhanceLevel )
+                call unitApplyEnhance(u, enemyc.enhanceLevel, enemyc.bossLvl)
                 call IssuePointOrder(u, "attack", targetX, targetY)
                 set i = i + 1
             endloop
@@ -45,9 +47,6 @@ library Spawn initializer init requires MapConst, GroupUtils, ListT, Diffculty, 
         set u = null
         call RemoveAllGuardPositions(forPlayer)
     endfunction
-
-
-
 
     private function init takes nothing returns nothing
         

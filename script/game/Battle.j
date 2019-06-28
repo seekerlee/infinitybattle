@@ -12,13 +12,13 @@ library Battle requires MapConst, RegisterPlayerUnitEvent, Spawn, GroupUtils
 
     function createEnemy takes nothing returns nothing
         local enemyConfig enemyConfigList = enemyConfig.create()
-        call enemyConfigList.addEnemy(getRandomIdOfType(typeWeak), 10, currentWave)
-        call enemyConfigList.addEnemy(getRandomIdOfType(typeWeak), 10, currentWave)
+        call enemyConfigList.addEnemy(getRandomIdOfType(typeWeak), 10, currentWave, 0)
+        call enemyConfigList.addEnemy(getRandomIdOfType(typeWeak), 10, currentWave, 0)
         if currentWave > 9 then
-            call enemyConfigList.addEnemy(getRandomIdOfType(typeNormal), 2, currentWave + 5)
+            call enemyConfigList.addEnemy(getRandomIdOfType(typeNormal), 2, currentWave + 5, 0)
         endif
         if currentWave > 14 then
-            call enemyConfigList.addEnemy(getRandomIdOfType(typeStrong), 1, currentWave + 20)
+            call enemyConfigList.addEnemy(getRandomIdOfType(typeStrong), 1, currentWave + 20, 1)
         endif
         
         call SpawnPointAttack(currentWaveGroup, P_DARK, enemyConfigList, GetRectCenterX(RCT_TOPCENTER), GetRectCenterY(RCT_TOPCENTER), 0.0, 0.0)
